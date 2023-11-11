@@ -49,6 +49,14 @@ adduser luicasad sudo    //logout and login
 `apt-get install git`
 
 ### ssh-server
+#### Instalation
+
+```bash
+sudo apt update
+sudo apt install openssh-server
+```
+#### Configuration
+
 A SSH service will be running on port 4242 only. 
 ```bash
 sed -i -e '/#Port 22/ s/#Port 22/Port 4242/' /etc/ssh/sshd_config
@@ -65,14 +73,13 @@ Either it is nor required by the subjec i added this restricction to allow only 
 ```bash
 sed -i -e '/^PermitRootLogin no/a AllowUsers luicasad' sshd_config
 ```
-
+#### Execution
 
 ```bash
-sudo apt update
-sudo apt install openssh-server
 sudo systemctl status ssh
 sudo systemctl start ssh
 sudo systemctl enable ssh
+```
 
 
 
