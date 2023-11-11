@@ -49,6 +49,23 @@ adduser luicasad sudo    //logout and login
 `apt-get install git`
 
 ### ssh-server
+A SSH service will be running on port 4242 only. 
+```bash
+sed -i -e '/#Port 22/ s/#Port 22/Port 4242/' /etc/ssh/sshd_config
+```
+
+For security reasons, it must not be possible to connect using SSH as root.
+
+```bash
+sed -i -e '/#PermitRootLogin/ s/#PermitRootLogin prohibit-password/PermitRootLogin no/' sshd_config
+```
+
+Either it is nor required by the subjec i added this restricction to allow only one user to connect thru ssh
+
+```bash
+sed -i -e '/^PermitRootLogin no/a AllowUsers luicasad' sshd_config
+```
+
 
 ```bash
 sudo apt update
