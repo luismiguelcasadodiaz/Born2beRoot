@@ -1,15 +1,31 @@
 # Born2beRoot
-## Virtual box network configuration
+## Virtual box network configuration 
 
-|Mode      | VM→Host | VM←Host    | VM1↔VM2 | VM→Net/LAN| VM←Net/LAN |
-|:---------|:-------:|:----------:|:-------:|:---------:|:----------:|
-|Host-only |+        |+           |+        |–          |–           |
-|Internal  |–        |–           |+        |–          |–           |
-|Bridged   |+        |+           |+        |+          |+           |
-|NAT       |+        |Port forward|–        |+          |Port forward|
-|NATservice|+        |Port forward|+        |+          |Port forward|
+An important decision for this proyect is about virtual machine conectivity. Virtualbox offers several option.
+I selected bridget cause i want to access Born2beRoot from other computers in my network 
+[In this instructions] (https://www.virtualbox.org/manual/ch06.html) you find a summary table wiht in/out connectivity posibilities offered by each option
 
+|Mode      | VM-->Host | VM<--Host  |VM1<-->VM2|VM-->Net/LAN|VM<--Net/LAN|
+|:---------|:---------:|:----------:|:--------:|:----------:|:----------:|
+|Host-only |+          |+           |+         |–           |–           |
+|Internal  |–          |–           |+         |–           |–           |
+|Bridged   |+          |+           |+         |+           |+           |
+|NAT       |+          |Port forward|–         |+           |Port forward|
+|NATservice|+          |Port forward|+         |+           |Port forward|
 
+Bridge connection
+_________________________________________________________________
+|                                                                |
+|     _____________________________________________________      |
+|     |                                                    |     |
+|     |     _________________________________________      |     |
+|     |     |                                        |     |     |
+|     |     |    Debian      IP    192.168.0.925     |     |     |
+|     |     |________________________________________|     |     |
+|     |          Virtual box                               |     |
+|     |____________________________________________________|     |
+|                Macos       IP    192.168.0.99                  |
+|________________________________________________________________|
 
 ### minimu installation
 
