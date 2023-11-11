@@ -14,6 +14,9 @@ I selected bridget cause i want to access Born2beRoot from other computers in my
 |NATservice|+          |Port forward|+         |+           |Port forward|
 
 Bridge connection
+
+![image](https://github.com/luismiguelcasadodiaz/Born2beRoot/assets/19540140/719c2a59-267d-40d9-af8d-a1bc2ace4f1d)
+
 _________________________________________________________________
 |                                                                |
 |     _____________________________________________________      |
