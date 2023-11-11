@@ -30,9 +30,11 @@ _________________________________________________________________
 |                Macos       IP    192.168.0.99                  |
 |________________________________________________________________|
 
-### minimu installation
+### Minimal installation
 
-
+[debian-12.2.0-amd64-netinst.iso of size 658 MB](https://www.debian.org/CD/netinst/) was my election. 
+One time consuming task in this proyect is the VM setup. The bigger the iso image, the longer to setup.
+It is true that i get an almost bare metal tha forces me to install one by one required utilities for this project. 
 
 ### git installation
 
