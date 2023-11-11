@@ -65,14 +65,22 @@ sed -i -e '/#Port 22/ s/#Port 22/Port 4242/' /etc/ssh/sshd_config
 For security reasons, it must not be possible to connect using SSH as root.
 
 ```bash
-sed -i -e '/#PermitRootLogin/ s/#PermitRootLogin prohibit-password/PermitRootLogin no/' sshd_config
+sed -i -e '/#PermitRootLogin/ s/#PermitRootLogin prohibit-password/PermitRootLogin no/' /etc/ssh/sshd_config
 ```
 
 Either it is nor required by the subjec i added this restricction to allow only one user to connect thru ssh
 
 ```bash
-sed -i -e '/^PermitRootLogin no/a AllowUsers luicasad' sshd_config
+sed -i -e '/^PermitRootLogin no/a AllowUsers luicasad' /etc/ssh/sshd_config
 ```
+
+Another improvement i wanted to try was implement a 2FA. Add this line.
+
+```bash
+sed -i -e '/^#PasswordAuthentication/ a ChallengeResponseAuthentication yes' /etc/ssh/sshd_config
+```
+
+
 #### Execution
 
 ```bash
