@@ -96,3 +96,7 @@ sudo ufw enable
 sudo ufw limit ssh
 
 `ip addr show`
+
+## References
+[cpu info](https://www.networkworld.com/article/2715970/counting-processors-on-your-linux-box.html)
+[memory usage](https://www.cyberciti.biz/faq/linux-check-memory-usage/)
