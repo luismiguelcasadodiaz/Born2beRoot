@@ -195,8 +195,22 @@ MEM_TOTAL= `cat /
 • The date and time of the last reboot.
 • Whether LVM is active or not.
 • The number of active connections.
+I use `ss command`. Socket statisitics command.  Option H shows no header. Option t shows tcp sockets. Option a show all sockets , listening or no.
+
+```bash
+ACTIVE_CONNECTIONS=`ss -Hta | grep ESTAB | wc -l`
+```
+
 • The number of users using the server.
+
+```bash
+LOGGED_USERS=`who | wc -l`
+```
+
 • The IPv4 address of your server and its MAC (Media Access Control) address. 
+`-I` does not depend on name resolution. Display all network addresseses configures on all network interfaces.
+
+
 ```bash
 IP_ADDRESS=`hostname -I`
 ```
