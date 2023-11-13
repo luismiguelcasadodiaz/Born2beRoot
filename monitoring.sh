@@ -16,19 +16,32 @@ AVAI_RAM=`cat  /proc/meminfo |grep MemAvailable | sed 's/MemAvailable://' | sed 
 USED_RAM=`bc <<< "scale=2; (${TOTAL_RAM} - ${AVAI_RAM}) / 1024 / 1024"`
 TOTAL_RAM=`bc <<< "scale=2; ${TOTAL_RAM} / 1024 / 1024"`
 USED_RAM_PERC=`bc <<< "scale=2; (${USED_RAM} / ${TOTAL_RAM}) * 100"`
+
+LVM_IN_USE="NO"
+if `grep mapper /etc/fstab | wc -l`
+then
+	LVM_IN_USE="YES"
+fi
+ACTIVE_CONNECTIONS=`ss -Hlt | wc -l`
+LOGGED_USERS=`who | wc -l`
 IP_ADDRESS=`hostname -I`
+SUDO_COMMANDS=`sudo journalctl  /usr/bin/sudo | grep COMMAND | wc -l`
 
 
-echo -e "${WHITE}Arquitecture     :${GREEN}$MACHINE_ARCHITECTURE"
-echo -e "${WHITE}Operating system :${GREEN}$OPERATING_SYSTEM"
-echo -e "${WHITE}Kernel Release   :${GREEN}$KERNEL_RELEASE"
-echo -e "${WHITE}Kernel version   :${GREEN}$KERNEL_VERSION"
-echo -e "${WHITE}Operating system :${GREEN}$OPERATING_SYSTEM"
-echo -e "${WHITE}CPUS             :${GREEN}$CPUS"
-echo -e "${WHITE}Physical cores   :${GREEN}$PHYSICAL_CORES"
-echo -e "${WHITE}virtual cores    :${GREEN}$VIRTUAL_CORES"
-echo -e "${WHITE}IP(v4) address   :${GREEN}$IP_ADDRESS"
-echo -e "${WHITE}Total memory     :${GREEN}$TOTAL_RAM GB"
-echo -e "${WHITE}Used memory      :${GREEN}$USED_RAM GB (${USED_RAM_PERC}%)"
+echo -e "${WHITE}Arquitecture           :${GREEN}$MACHINE_ARCHITECTURE"
+echo -e "${WHITE}Operating system       :${GREEN}$OPERATING_SYSTEM"
+echo -e "${WHITE}Kernel Release         :${GREEN}$KERNEL_RELEASE"
+echo -e "${WHITE}Kernel version         :${GREEN}$KERNEL_VERSION"
+echo -e "${WHITE}Operating system       :${GREEN}$OPERATING_SYSTEM"
+echo -e "${WHITE}CPUS                   :${GREEN}$CPUS"
+echo -e "${WHITE}Physical cores         :${GREEN}$PHYSICAL_CORES"
+echo -e "${WHITE}virtual cores          :${GREEN}$VIRTUAL_CORES"
+echo -e "${WHITE}Total memory           :${GREEN}$TOTAL_RAM GB"
+echo -e "${WHITE}Used memory            :${GREEN}$USED_RAM GB (${USED_RAM_PERC}%)"
+echo -e "${WHITE}LVM in use             :${GREEN}$LVM_IN_USE"
+echo -e "${WHITE}TCP active connections :${GREEN}$ACTIVE_CONNECTIONS"
+echo -e "${WHITE}Looged users           :${GREEN}$LOGGED_USERS"
+echo -e "${WHITE}IP(v4) address         :${GREEN}$IP_ADDRESS"
+echo -e "${WHITE}Sudo commands executed :${GREEN}$SUDO_COMMANDS"
 echo -e "${ENDCOLOR}"
 
