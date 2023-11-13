@@ -194,6 +194,7 @@ USED_RAM_PERC=`bc <<< "scale=2; (${USED_RAM} / ${TOTAL_RAM}) * 100"`
 ```
 
 • The current available memory on your server and its utilization rate as a percentage. 
+
 MEM_TOTAL= `cat /
 
 
@@ -204,6 +205,7 @@ MEM_TOTAL= `cat /
 • Whether LVM is active or not.
 
 • The number of active connections.
+
 I use `ss command`. Socket statisitics command.  Option H shows no header. Option t shows tcp sockets. Option a show all sockets , listening or no.
 
 ```bash
@@ -211,6 +213,7 @@ ACTIVE_CONNECTIONS=`ss -Hta | grep ESTAB | wc -l`
 ```
 
 • The number of users using the server.
+
 `who` does not print headers.
 
 ```bash
@@ -218,6 +221,7 @@ LOGGED_USERS=`who | wc -l`
 ```
 
 • The IPv4 address of your server and its MAC (Media Access Control) address. 
+
 `-I` does not depend on name resolution. Display all network addresseses configures on all network interfaces.
 
 
@@ -226,6 +230,7 @@ IP_ADDRESS=`hostname -I`
 ```
 
 • The number of commands executed with the sudo program.
+
 ```bash
 SUDO_COMMANDS=`sudo journalctl  /usr/bin/sudo | grep COMMAND | wc -l`
 ```
