@@ -43,6 +43,9 @@ At installation time i opted for install nothing
 
 
 
+<img width="819" alt="image" src="https://github.com/luismiguelcasadodiaz/Born2beRoot/assets/19540140/679210af-50b8-4d28-9f84-fa176d85550b">
+
+
 ## Additional Instalation
 ### git installation
 
