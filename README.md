@@ -201,6 +201,7 @@ MEM_TOTAL= `cat /
 • The current utilization rate of your processors as a percentage.
 
 • The date and time of the last reboot.
+
 `-b` option in `who` command show last boot timestamp.
 
 ```bash
@@ -210,6 +211,15 @@ LAST_BOOT=`who -b | sed 's/[a-z ]*//'`
 
 • Whether LVM is active or not.
 
+Inside `/etc/fstab` the path of logic volumes managed by the device mapper start by `/dev/mapper. I count the number of lines in fstab containing the word `mapper`. If count is greater than zero then i set the flag to YES.
+
+```bash
+LVM_IN_USE="NO"
+if  [[ $(grep 'mapper' /etc/fstab | wc -l) -gt 0 ]];
+then
+    LVM_IN_USE="YES"
+fi
+```
 
 
 • The number of active connections.
