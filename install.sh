@@ -1,2 +1,4 @@
 #!/usr/bin/bash
-sudo apt install -y openssh-server
+apt install -y openssh-server
+apt install -y ufw
+apt install -y sudo
