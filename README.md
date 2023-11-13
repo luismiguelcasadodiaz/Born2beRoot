@@ -174,26 +174,35 @@ KERNEL_VERSION=`uname --kernel-version`
 OPERATING_SYSTEM=`uname --operating-system`
 MACHINE_ARCHITECTURE=`uname --machine`
 ```
-• The number of physical processors.
+• The number of physical and virtual processors.
 
 ```bash
 CPUS=`grep "physical id" /proc/cpuinfo |sort | uniq | wc -l `
 PHYSICAL_CORES=`grep "cpu cores" /proc/cpuinfo | uniq | sed 's/cpu cores *\t: //'`
 VIRTUAL_CORES=`grep "^processor" /proc/cpuinfo |sort | uniq | wc -l `
 ```
-• The number of virtual processors.
+
 • The current available RAM on your server and its utilization rate as a percentage. 
 
 ```bash
-TOTAL_RAM=`cat  /proc/meminfo |grep MemTotal | sed 's/MemTotal:       //'| sed 's/ kB//'`
-USED_RAM=`cat  /proc/meminfo |grep MemTotal | sed 's/MemTotal:       //'| sed 's/ kB//'`
+
+TOTAL_RAM=`cat  /proc/meminfo |grep MemTotal | sed 's/MemTotal://' | sed 's/ //g' | sed 's/kB//'`
+AVAI_RAM=`cat  /proc/meminfo |grep MemAvailable | sed 's/MemAvailable://' | sed 's/ //g' | sed 's/kB//'`
+USED_RAM=`bc <<< "scale=2; (${TOTAL_RAM} - ${AVAI_RAM}) / 1024 / 1024"`
+TOTAL_RAM=`bc <<< "scale=2; ${TOTAL_RAM} / 1024 / 1024"`
+USED_RAM_PERC=`bc <<< "scale=2; (${USED_RAM} / ${TOTAL_RAM}) * 100"`
 ```
 
 • The current available memory on your server and its utilization rate as a percentage. 
 MEM_TOTAL= `cat /
+
+
 • The current utilization rate of your processors as a percentage.
+
 • The date and time of the last reboot.
+
 • Whether LVM is active or not.
+
 • The number of active connections.
 I use `ss command`. Socket statisitics command.  Option H shows no header. Option t shows tcp sockets. Option a show all sockets , listening or no.
 
@@ -202,6 +211,7 @@ ACTIVE_CONNECTIONS=`ss -Hta | grep ESTAB | wc -l`
 ```
 
 • The number of users using the server.
+`who` does not print headers.
 
 ```bash
 LOGGED_USERS=`who | wc -l`
