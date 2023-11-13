@@ -27,18 +27,7 @@ Bridge connection
 
 ![image](https://github.com/luismiguelcasadodiaz/Born2beRoot/assets/19540140/719c2a59-267d-40d9-af8d-a1bc2ace4f1d)
 
-_________________________________________________________________
-|                                                                |
-|     _____________________________________________________      |
-|     |                                                    |     |
-|     |     _________________________________________      |     |
-|     |     |                                        |     |     |
-|     |     |    Debian      IP    192.168.0.925     |     |     |
-|     |     |________________________________________|     |     |
-|     |          Virtual box                               |     |
-|     |____________________________________________________|     |
-|                Macos       IP    192.168.0.99                  |
-|________________________________________________________________|
+
 
 ### Minimal installation
 
@@ -46,6 +35,8 @@ _________________________________________________________________
 One time consuming task in this proyect is the VM setup. The bigger the iso image, the longer to setup.
 It is true that i get an almost bare metal tha forces me to install one by one required utilities for this project. 
 25 seconds to download 628 MB. I moved the image to my /sgoinfre/Perso/ directory
+
+At installation time i opted for install nothing
 
 
 <img width="782" alt="image" src="https://github.com/luismiguelcasadodiaz/Born2beRoot/assets/19540140/294d6cb0-708d-43fb-81f8-8ecc15459e55">
