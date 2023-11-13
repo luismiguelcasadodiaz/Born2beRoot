@@ -199,10 +199,14 @@ MEM_TOTAL= `cat /
 • The IPv4 address of your server and its MAC (Media Access Control) address. 
 ```bash
 IP_ADDRESS=`hostname -I`
-
 ```
 
 • The number of commands executed with the sudo program.
+```bash
+SUDO_COMMANDS=`sudo journalctl  /usr/bin/sudo | grep COMMAND | wc -l`
+```
+
+
 
 ## References
 [cpu info](https://www.networkworld.com/article/2715970/counting-processors-on-your-linux-box.html)
