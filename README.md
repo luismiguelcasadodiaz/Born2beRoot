@@ -1,4 +1,13 @@
 # Born2beRoot
+## Prepare space for your virtual machine
+Remember that disk space we have in our 42 sessions is limited to 5 GB. It is enough for this proyect. You can stop here and do nothing about it or you can use a permanent 30 GB disk quota you are entitle to in /sgoinfre/Perso.
+Permanent while you are using it. In case you don use it during 60 day, your Personal disk quota will be removed.
+
+```bash
+mkdir /sgoinfre/Perso/yourusername
+```
+Then use this path to save the image of your virtual machine (VM).
+
 ## Virtual box network configuration 
 
 An important decision for this proyect is about virtual machine conectivity. Virtualbox offers several option.
@@ -35,6 +44,7 @@ _________________________________________________________________
 [debian-12.2.0-amd64-netinst.iso of size 658 MB](https://www.debian.org/CD/netinst/) was my election. 
 One time consuming task in this proyect is the VM setup. The bigger the iso image, the longer to setup.
 It is true that i get an almost bare metal tha forces me to install one by one required utilities for this project. 
+25 seconds to download 628 MB. I moved the image to my /sgoinfre/Perso/ directory
 
 ### git installation
 
