@@ -63,6 +63,16 @@ sudo apt install openssh-server
 ```
 #### Configuration
 
+##### firewall
+
+You have to configure your operating system with the UFW (or firewalld for Rocky) firewall and thus leave only port 4242 open.
+
+```bash
+ufw allow 4242
+```
+
+
+
 ##### ssh
 
 A SSH service will be running on port 4242 only. 
@@ -180,3 +190,46 @@ IP_ADDRESS=`hostname -I`
 [cpu info](https://www.networkworld.com/article/2715970/counting-processors-on-your-linux-box.html)
 
 [memory usage](https://www.cyberciti.biz/faq/linux-check-memory-usage/)
+
+#### to refresh my memory
+
+##### apt
+Install a specific package
+
+```bash
+apt install [package-name] 
+```
+
+Remove a specific package
+
+```bash
+apt remove [package-name] 
+```
+
+Remove all the data, application and configuration files,
+
+```bash
+apt remove --purge [package-name] 
+```
+
+Remove orphaned dependencies from system
+```bash
+apt autoremove
+```
+
+##### ufw
+Delete rule
+```bash
+ufw status numbered
+ufw delete [number] 
+```
+
+Add negative rule
+```bash
+ufw deny 22
+```
+
+Add positive rule
+```bash
+ufw allow 4242
+```
