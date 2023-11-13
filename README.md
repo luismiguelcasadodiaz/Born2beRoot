@@ -201,8 +201,16 @@ MEM_TOTAL= `cat /
 • The current utilization rate of your processors as a percentage.
 
 • The date and time of the last reboot.
+`-b` option in `who` command show last boot timestamp.
+
+```bash
+LAST_BOOT=`who -b | sed 's/[a-z ]*//'`
+```
+
 
 • Whether LVM is active or not.
+
+
 
 • The number of active connections.
 
