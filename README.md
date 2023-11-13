@@ -47,6 +47,10 @@ One time consuming task in this proyect is the VM setup. The bigger the iso imag
 It is true that i get an almost bare metal tha forces me to install one by one required utilities for this project. 
 25 seconds to download 628 MB. I moved the image to my /sgoinfre/Perso/ directory
 
+
+<img width="782" alt="image" src="https://github.com/luismiguelcasadodiaz/Born2beRoot/assets/19540140/294d6cb0-708d-43fb-81f8-8ecc15459e55">
+
+
 ### git installation
 
 I decide to keep in a git repository the script to configure de server as requested in de proyect
@@ -173,8 +177,15 @@ USED_RAM=`cat  /proc/meminfo |grep MemTotal | sed 's/MemTotal:       //'| sed 's
 • Whether LVM is active or not.
 • The number of active connections.
 • The number of users using the server.
-• The IPv4 address of your server and its MAC (Media Access Control) address. • The number of commands executed with the sudo program.
+• The IPv4 address of your server and its MAC (Media Access Control) address. 
+```bash
+IP_ADDRESS=`hostname -I`
+
+```
+
+• The number of commands executed with the sudo program.
 
 ## References
 [cpu info](https://www.networkworld.com/article/2715970/counting-processors-on-your-linux-box.html)
+
 [memory usage](https://www.cyberciti.biz/faq/linux-check-memory-usage/)
