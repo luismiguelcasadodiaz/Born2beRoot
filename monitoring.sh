@@ -16,9 +16,9 @@ AVAI_RAM=`cat  /proc/meminfo |grep MemAvailable | sed 's/MemAvailable://' | sed 
 USED_RAM=`bc <<< "scale=2; (${TOTAL_RAM} - ${AVAI_RAM}) / 1024 / 1024"`
 TOTAL_RAM=`bc <<< "scale=2; ${TOTAL_RAM} / 1024 / 1024"`
 USED_RAM_PERC=`bc <<< "scale=2; (${USED_RAM} / ${TOTAL_RAM}) * 100"`
-
+LAST_BOOT=`who -b | sed 's/[a-z ]*//'`
 LVM_IN_USE="NO"
-if `grep mapper /etc/fstab | wc -l`
+if  [[ $(grep 'mapper' /etc/fstab | wc -l) -gt 0 ]];
 then
 	LVM_IN_USE="YES"
 fi
@@ -38,6 +38,7 @@ echo -e "${WHITE}Physical cores         :${GREEN}$PHYSICAL_CORES"
 echo -e "${WHITE}virtual cores          :${GREEN}$VIRTUAL_CORES"
 echo -e "${WHITE}Total memory           :${GREEN}$TOTAL_RAM GB"
 echo -e "${WHITE}Used memory            :${GREEN}$USED_RAM GB (${USED_RAM_PERC}%)"
+echo -e "${WHITE}Last boot time         :${GREEN}$LAST_BOOT"
 echo -e "${WHITE}LVM in use             :${GREEN}$LVM_IN_USE"
 echo -e "${WHITE}TCP active connections :${GREEN}$ACTIVE_CONNECTIONS"
 echo -e "${WHITE}Looged users           :${GREEN}$LOGGED_USERS"
