@@ -13,6 +13,7 @@ PHYSICAL_CORES=`grep "cpu cores" /proc/cpuinfo | uniq | sed 's/cpu cores *\t: //
 VIRTUAL_CORES=`grep "^processor" /proc/cpuinfo |sort | uniq | wc -l `
 TOTAL_RAM=`cat  /proc/meminfo |grep MemTotal | sed 's/MemTotal:       //'| sed 's/ kB//'`
 USED_RAM=`cat  /proc/meminfo |grep MemTotal | sed 's/MemTotal:       //'| sed 's/ kB//'`
+IP_ADDRESS=`hostname -I`
 
 
 echo -e "${WHITE}Arquitecture     :${GREEN}$MACHINE_ARCHITECTURE"
@@ -23,5 +24,6 @@ echo -e "${WHITE}Operating system :${GREEN}$OPERATING_SYSTEM"
 echo -e "${WHITE}CPUS             :${GREEN}$CPUS"
 echo -e "${WHITE}Physical cores   :${GREEN}$PHYSICAL_CORES"
 echo -e "${WHITE}virtual cores    :${GREEN}$VIRTUAL_CORES"
+echo -e "${WHITE}IP(v4) address   :${GREEN}$IP_ADDRESS"
 echo -e "${ENDCOLOR}"
 
