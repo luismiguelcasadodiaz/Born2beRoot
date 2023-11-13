@@ -1,6 +1,6 @@
 # Born2beRoot
 ## Prepare space for your virtual machine
-Remember that disk space we have in our 42 sessions is limited to 5 GB. It is enough for this proyect. You can stop here and do nothing about it or you can use a permanent 30 GB disk quota you are entitled to in /sgoinfre/Perso.
+Remember that disk space we have in our 42 sessions is limited to 5 GB. It is enough for the mandatory part of this proyect. You can stop here and do nothing about it or, in case you plan to do the bonus part, you can use a permanent 30 GB disk quota you are entitled to in /sgoinfre/Perso.
 
 It is permanent while you are using it. In case you don use it during 60 day, your Personal disk quota will be removed.
 
@@ -41,7 +41,8 @@ At installation time i opted for install nothing
 
 <img width="782" alt="image" src="https://github.com/luismiguelcasadodiaz/Born2beRoot/assets/19540140/294d6cb0-708d-43fb-81f8-8ecc15459e55">
 
-
+### Partition time
+WAIT!!!! Mandatory or bonus??? watch the subjec to see partition scheme. Worth to part VM's harddisk as bonus request to avoid configure a new machine for the bonus later.
 
 <img width="819" alt="image" src="https://github.com/luismiguelcasadodiaz/Born2beRoot/assets/19540140/679210af-50b8-4d28-9f84-fa176d85550b">
 
