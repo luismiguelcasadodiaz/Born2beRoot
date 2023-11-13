@@ -29,7 +29,7 @@ Bridge connection
 
 
 
-### Minimal installation
+## Minimal installation
 
 [debian-12.2.0-amd64-netinst.iso of size 658 MB](https://www.debian.org/CD/netinst/) was my election. 
 One time consuming task in this proyect is the VM setup. The bigger the iso image, the longer to setup.
@@ -42,6 +42,8 @@ At installation time i opted for install nothing
 <img width="782" alt="image" src="https://github.com/luismiguelcasadodiaz/Born2beRoot/assets/19540140/294d6cb0-708d-43fb-81f8-8ecc15459e55">
 
 
+
+## Additional Instalation
 ### git installation
 
 I decide to keep in a git repository the script to configure de server as requested in de proyect
@@ -55,13 +57,23 @@ adduser luicasad sudo    //logout and login
 `apt-get install git`
 
 ### ssh-server
-#### Instalation
-
 ```bash
 sudo apt update
 sudo apt install openssh-server
 ```
-#### Configuration
+
+### firewall
+```bash
+apt install ufw
+```
+
+### basic calculator
+```bash
+apt install bc
+```
+
+
+## Configuration
 
 ##### firewall
 
@@ -173,7 +185,9 @@ TOTAL_RAM=`cat  /proc/meminfo |grep MemTotal | sed 's/MemTotal:       //'| sed '
 USED_RAM=`cat  /proc/meminfo |grep MemTotal | sed 's/MemTotal:       //'| sed 's/ kB//'`
 ```
 
-• The current available memory on your server and its utilization rate as a percentage. • The current utilization rate of your processors as a percentage.
+• The current available memory on your server and its utilization rate as a percentage. 
+MEM_TOTAL= `cat /
+• The current utilization rate of your processors as a percentage.
 • The date and time of the last reboot.
 • Whether LVM is active or not.
 • The number of active connections.
