@@ -322,3 +322,7 @@ ufw allow 4242
 
 
 https://www.linuxtuto.com/how-to-install-wordpress-on-debian-12/
+
+
+
+<img width="767" alt="image" src="https://github.com/luismiguelcasadodiaz/Born2beRoot/assets/19540140/d8f71edb-88bc-4600-af19-aa6f97bc3f84">
