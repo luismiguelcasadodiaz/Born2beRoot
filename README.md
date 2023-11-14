@@ -227,6 +227,9 @@ cpu2 210 0 226 120325 1309 0 25 0 0 0
 cpu3 226 0 265 120887 650 0 13 0 0 0
 
 
+cat /proc/stat |grep 'cpu ' | sed 's/  / /g'| awk '{split($0, t, " ");for(i=0 ; i<=NF;i++) print(t[i]) }'
+
+
 • The date and time of the last reboot.
 
 `-b` option in `who` command show last boot timestamp.
