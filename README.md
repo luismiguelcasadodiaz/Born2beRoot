@@ -230,7 +230,10 @@ All  of  the numbers reported  in  this file are  aggregates since the system fi
 
 The sum of all numerical values in a row gives total time since boot. Utilization rate is the complementary of twiddling thumbs rate.
 
-cat /proc/stat |grep 'cpu ' | sed 's/  / /g'| awk '{split($0, t, " ");for(i=0 ; i<=NF;i++) print(t[i]) }'
+```bash
+CPU_USAGE_RATE=`cat /proc/stat | grep 'cpu ' | sed 's/cpu  //g' | awk  '{split($0,t," "); for(i=NF;i>0;i--) s = s + $i; print $i } END {print 1 - ($4/s) }'
+```
+
 
 
 • The date and time of the last reboot.
