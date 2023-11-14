@@ -77,6 +77,22 @@ apt install ufw
 apt install bc
 ```
 
+## bonus instalation
+
+### wget nzip nginx 
+
+### php php-curl php-fpm php-bcmath php-gd php-soap php-zip php-curl php-mbstring php-mysqlnd php-gd php-xml php-intl php-zip
+
+### mariadb-server mariadb-client
+
+### wordpress wget https://wordpress.org/latest.zip
+
+<img width="595" alt="image" src="https://github.com/luismiguelcasadodiaz/Born2beRoot/assets/19540140/f3f5a8a2-f758-4e4f-8885-7177b4a6d118">
+
+<img width="595" alt="image" src="https://github.com/luismiguelcasadodiaz/Born2beRoot/assets/19540140/7a6d1dac-0a56-406e-9a45-97e5bc17c876">
+
+
+
 
 ## Configuration
 
@@ -303,3 +319,6 @@ Add positive rule
 ```bash
 ufw allow 4242
 ```
+
+
+https://www.linuxtuto.com/how-to-install-wordpress-on-debian-12/
