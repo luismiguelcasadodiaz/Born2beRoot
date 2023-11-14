@@ -1,6 +1,6 @@
     # Born2beRoot
 ## Prepare space for your virtual machine
-Remember that disk space we have in our 42 sessions is limited to 5 GB. It is enough for the mandatory part of this proyect. You can stop here and do nothing about it or, in case you plan to do the bonus part, you can use a permanent 30 GB disk quota you are entitled to in /sgoinfre/Perso.
+Remember that disk space we have in our 42 sessions is limited to 5 GB. It is enough for the mandatory part of this proyect. You can stop here and do nothing about it or, in case you plan to do the bonus part, you can use a permanent 30 GB disk quota you are entitled to in /sgoinfre/Perso. (see below conditions to use it without sad surprises)
 
 It is permanent while you are using it. In case you don use it during 60 day, your Personal disk quota will be removed.
 
@@ -217,6 +217,16 @@ MEM_TOTAL= `cat /
 
 • The current utilization rate of your processors as a percentage.
 
+I used this [reference] (https://www.kernel.org/doc/Documentation/filesystems/proc.txt) to learn about.
+All  of  the numbers reported  in  this file are  aggregates since the system first booted.
+
+cpu  882 1 817 483007 3082 0 396 0 0 0
+cpu0 238 0 195 120874 754 0 60 0 0 0
+cpu1 206 1 130 120920 368 0 297 0 0 0
+cpu2 210 0 226 120325 1309 0 25 0 0 0
+cpu3 226 0 265 120887 650 0 13 0 0 0
+
+
 • The date and time of the last reboot.
 
 `-b` option in `who` command show last boot timestamp.
@@ -270,7 +280,19 @@ IP_ADDRESS=`hostname -I`
 SUDO_COMMANDS=`sudo journalctl  /usr/bin/sudo | grep COMMAND | wc -l`
 ```
 
+## Sgoinfre usage conditions
 
+Copy pasted from our intranet
+
+- If you want to use sgoinfre, you must create a directory in `/sgoinfre/Perso/your42login` .If the name of a folder is different from a login, it will be deleted.
+
+- A quota of 30GB/dir. If more, it will be deleted.
+
+- You can give the rights you want to your dir, but we strongly recommend a chmod -R 700
+
+- This share is not intended to have a high level of availability, durability, or performance. It is there to help you out, and we recommend that you use another storage media for your important data.
+
+- The data on this share may be deleted without any notice.
 
 ## References
 [cpu info](https://www.networkworld.com/article/2715970/counting-processors-on-your-linux-box.html)
