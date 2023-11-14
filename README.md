@@ -220,11 +220,13 @@ MEM_TOTAL= `cat /
 I used this [reference] (https://www.kernel.org/doc/Documentation/filesystems/proc.txt) to learn about.
 All  of  the numbers reported  in  this file are  aggregates since the system first booted.
 
-cpu  882 1 817 483007 3082 0 396 0 0 0
-cpu0 238 0 195 120874 754 0 60 0 0 0
-cpu1 206 1 130 120920 368 0 297 0 0 0
-cpu2 210 0 226 120325 1309 0 25 0 0 0
-cpu3 226 0 265 120887 650 0 13 0 0 0
+|    |Usr|nice|sys|idl   |iow |irq|softirq|steal|guest|guest_nice|
+|----|---|----|---|------|----|---|-------|-----|-----|----------|
+|cpu |882|1   |817|483007|3082|0  |396    |0    |0    |0         |
+|cpu0|238|0   |195|120874|754 |0  |60     |0    |0    |0         |
+|cpu1|206|1   |130|120920|368 |0  |297    |0    |0    |0         |
+|cpu2|210|0   |226|120325|1309|0  |25     |0    |0    |0         |
+|cpu3|226|0   |265|120887|650 |0  |13     |0    |0    |0         |
 
 
 cat /proc/stat |grep 'cpu ' | sed 's/  / /g'| awk '{split($0, t, " ");for(i=0 ; i<=NF;i++) print(t[i]) }'
