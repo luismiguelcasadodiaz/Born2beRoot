@@ -46,7 +46,7 @@ WAIT!!!! Mandatory or bonus??? watch the subjecT to see partition scheme. Worth 
 
 <img width="819" alt="image" src="https://github.com/luismiguelcasadodiaz/Born2beRoot/assets/19540140/679210af-50b8-4d28-9f84-fa176d85550b">
 
-During the partition if manual , first encrypt, later use LVM.
+During the partition if manual .... first create 3 primary partitions, then encrypt one (it will take time overwite it with random data, later use LVM.
 
 ## Additional Instalation
 ### git installation
