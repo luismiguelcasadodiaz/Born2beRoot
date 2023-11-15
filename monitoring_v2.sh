@@ -26,8 +26,8 @@ printf -v USED_RAM "%4.2f" $USED_RAM
 # CPU usage 
 CPU_USAGE_RATE=`cat /proc/stat | grep 'cpu ' | sed 's/cpu  //g' | awk  '{split($0,t," "); for(i=NF;i>0;i--) s = s + $i } END {print 1 - ($4/s) }' | sed 's/\,/\./'`
 CPU_USAGE_PERC=`bc <<< "scale=2; 100 * ${CPU_USAGE_RATE}"`
+CPU_USAGE_PERC=`echo $CPU_USAGE_PERC | sed 's/\./\,/'`
 printf -v CPU_USAGE_PERC "%4.2f" $CPU_USAGE_PERC 
-
 # Disk usage
 DISK_TOT=`df -m | grep "/dev/" | awk '{disks_size += $2} END {print disks_size}'`
 DISK_USE=`df -m | grep "/dev/" | awk '{disks_size += $3} END {print disks_size}'`
@@ -57,23 +57,22 @@ MAC_ADDRESS=`ip link | grep ether | awk '{print $2}'`
 SUDO_COMMANDS=`sudo journalctl  /usr/bin/sudo | grep COMMAND | wc -l`
 
 
-wall  "${WHITE}Arquitecture           :${GREEN}$MACHINE_ARCHITECTURE
-${WHITE}Operating system       :${GREEN}$OPERATING_SYSTEM
-${WHITE}Kernel Release         :${GREEN}$KERNEL_RELEASE
-${WHITE}Kernel version         :${GREEN}$KERNEL_VERSION
-${WHITE}Operating system       :${GREEN}$OPERATING_SYSTEM
-${WHITE}CPUS                   :${GREEN}$CPUS
-${WHITE}Physical cores         :${GREEN}$PHYSICAL_CORES
-${WHITE}virtual cores          :${GREEN}$VIRTUAL_CORES
-${WHITE}Total memory           :${GREEN}$TOTAL_RAM GB
-${WHITE}Used memory            :${GREEN}$USED_RAM GB (${USED_RAM_PERC}%)
-${WHITE}Disk usage             :${GREEN}$DISK_USE MB/$DISK_TOT MB($DISK_PER %)
-${WHITE}CPU load               :${GREEN}$CPU_USAGE_PERC %
-${WHITE}Last boot time         :${GREEN}$LAST_BOOT
-${WHITE}LVM in use             :${GREEN}$LVM_IN_USE
-${WHITE}TCP active connections :${GREEN}$ACTIVE_CONNECTIONS
-${WHITE}Looged users           :${GREEN}$LOGGED_USERS
-${WHITE}IP(v4) address         :${GREEN}$IP_ADDRESS ($MAC_ADDRESS)
-${WHITE}Sudo commands executed :${GREEN}$SUDO_COMMANDS"
-echo -e "${ENDCOLOR}"
+wall  "Arquitecture           :$MACHINE_ARCHITECTURE
+Operating system       :$OPERATING_SYSTEM
+Kernel Release         :$KERNEL_RELEASE
+Kernel version         :$KERNEL_VERSION
+Operating system       :$OPERATING_SYSTEM
+CPUS                   :$CPUS
+Physical cores         :$PHYSICAL_CORES
+virtual cores          :$VIRTUAL_CORES
+Total memory           :$TOTAL_RAM GB
+Used memory            :$USED_RAM GB (${USED_RAM_PERC}%)
+Disk usage             :$DISK_USE MB/$DISK_TOT MB($DISK_PER %)
+CPU load               :$CPU_USAGE_PERC %
+Last boot time         :$LAST_BOOT
+LVM in use             :$LVM_IN_USE
+TCP active connections :$ACTIVE_CONNECTIONS
+Looged users           :$LOGGED_USERS
+IP(v4) address         :$IP_ADDRESS ($MAC_ADDRESS)
+Sudo commands executed :$SUDO_COMMANDS"
 
