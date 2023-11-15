@@ -21,10 +21,12 @@ AVAI_RAM=`cat  /proc/meminfo |grep MemAvailable | sed 's/MemAvailable://' | sed 
 USED_RAM=`bc <<< "scale=2; (${TOTAL_RAM} - ${AVAI_RAM}) / 1024 / 1024"`
 TOTAL_RAM=`bc <<< "scale=2; ${TOTAL_RAM} / 1024 / 1024"`
 USED_RAM_PERC=`bc <<< "scale=2; (${USED_RAM} / ${TOTAL_RAM}) * 100"`
+printf -v USED_RAM "%4.2f" $USED_RAM 
 
 # CPU usage 
 CPU_USAGE_RATE=`cat /proc/stat | grep 'cpu ' | sed 's/cpu  //g' | awk  '{split($0,t," "); for(i=NF;i>0;i--) s = s + $i } END {print 1 - ($4/s) }' | sed 's/\,/\./'`
 CPU_USAGE_PERC=`bc <<< "scale=2; 100 * ${CPU_USAGE_RATE}"`
+printf -v CPU_USAGE_PERC "%4.2f" $CPU_USAGE_PERC 
 
 # Disk usage
 DISK_TOT=`df -m | grep "/dev/" | awk '{disks_size += $2} END {print disks_size}'`
@@ -55,26 +57,23 @@ MAC_ADDRESS=`ip link | grep ether | awk '{print $2}'`
 SUDO_COMMANDS=`sudo journalctl  /usr/bin/sudo | grep COMMAND | wc -l`
 
 
-echo -e "${WHITE}Arquitecture           :${GREEN}$MACHINE_ARCHITECTURE"
-echo -e "${WHITE}Operating system       :${GREEN}$OPERATING_SYSTEM"
-echo -e "${WHITE}Kernel Release         :${GREEN}$KERNEL_RELEASE"
-echo -e "${WHITE}Kernel version         :${GREEN}$KERNEL_VERSION"
-echo -e "${WHITE}Operating system       :${GREEN}$OPERATING_SYSTEM"
-echo -e "${WHITE}CPUS                   :${GREEN}$CPUS"
-echo -e "${WHITE}Physical cores         :${GREEN}$PHYSICAL_CORES"
-echo -e "${WHITE}virtual cores          :${GREEN}$VIRTUAL_CORES"
-#printf -v TOTAL_RAM "%4.2f" $TOTAL_RAM 
-echo -e "${WHITE}Total memory           :${GREEN}$TOTAL_RAM GB"
-printf -v USED_RAM "%4.2f" $USED_RAM 
-echo -e "${WHITE}Used memory            :${GREEN}$USED_RAM GB (${USED_RAM_PERC}%)"
-echo -e "${WHITE}Disk usage             :${GREEN}$DISK_USE MB/$DISK_TOT MB($DISK_PER %)"
-printf -v CPU_USAGE_PERC "%4.2f" $CPU_USAGE_PERC 
-echo -e "${WHITE}CPU load               :${GREEN}$CPU_USAGE_PERC %"
-echo -e "${WHITE}Last boot time         :${GREEN}$LAST_BOOT"
-echo -e "${WHITE}LVM in use             :${GREEN}$LVM_IN_USE"
-echo -e "${WHITE}TCP active connections :${GREEN}$ACTIVE_CONNECTIONS"
-echo -e "${WHITE}Looged users           :${GREEN}$LOGGED_USERS"
-echo -e "${WHITE}IP(v4) address         :${GREEN}$IP_ADDRESS ($MAC_ADDRESS)"
-echo -e "${WHITE}Sudo commands executed :${GREEN}$SUDO_COMMANDS"
+wall  "${WHITE}Arquitecture           :${GREEN}$MACHINE_ARCHITECTURE
+${WHITE}Operating system       :${GREEN}$OPERATING_SYSTEM
+${WHITE}Kernel Release         :${GREEN}$KERNEL_RELEASE
+${WHITE}Kernel version         :${GREEN}$KERNEL_VERSION
+${WHITE}Operating system       :${GREEN}$OPERATING_SYSTEM
+${WHITE}CPUS                   :${GREEN}$CPUS
+${WHITE}Physical cores         :${GREEN}$PHYSICAL_CORES
+${WHITE}virtual cores          :${GREEN}$VIRTUAL_CORES
+${WHITE}Total memory           :${GREEN}$TOTAL_RAM GB
+${WHITE}Used memory            :${GREEN}$USED_RAM GB (${USED_RAM_PERC}%)
+${WHITE}Disk usage             :${GREEN}$DISK_USE MB/$DISK_TOT MB($DISK_PER %)
+${WHITE}CPU load               :${GREEN}$CPU_USAGE_PERC %
+${WHITE}Last boot time         :${GREEN}$LAST_BOOT
+${WHITE}LVM in use             :${GREEN}$LVM_IN_USE
+${WHITE}TCP active connections :${GREEN}$ACTIVE_CONNECTIONS
+${WHITE}Looged users           :${GREEN}$LOGGED_USERS
+${WHITE}IP(v4) address         :${GREEN}$IP_ADDRESS ($MAC_ADDRESS)
+${WHITE}Sudo commands executed :${GREEN}$SUDO_COMMANDS"
 echo -e "${ENDCOLOR}"
 

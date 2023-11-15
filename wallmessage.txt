@@ -1,0 +1,19 @@
+[97mArquitecture           :[92mx86_64
+[97mOperating system       :[92mGNU/Linux
+[97mKernel Release         :[92m6.1.0-13-amd64
+[97mKernel version         :[92m#1 SMP PREEMPT_DYNAMIC Debian 6.1.55-1 (2023-09-29)
+[97mOperating system       :[92mGNU/Linux
+[97mCPUS                   :[92m1
+[97mPhysical cores         :[92m1
+[97mvirtual cores          :[92m1
+[97mTotal memory           :[92m1.92 GB
+[97mUsed memory            :[92m0.45 GB (23.00%)
+[97mDisk usage             :[92m1763 MB/17048 MB(10.34 %)
+[97mCPU load               :[92m0.22 %
+[97mLast boot time         :[92m2023-11-15 09:38
+[97mLVM in use             :[92mYES
+[97mTCP active connections :[92m5
+[97mLooged users           :[92m2
+[97mIP(v4) address         :[92m10.11.250.111  (08:00:27:1a:3c:f3)
+[97mSudo commands executed :[92m30
+[0m
