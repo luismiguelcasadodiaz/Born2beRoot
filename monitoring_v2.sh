@@ -26,7 +26,7 @@ printf -v USED_RAM "%4.2f" $USED_RAM
 # CPU usage 
 CPU_USAGE_RATE=`cat /proc/stat | grep 'cpu ' | sed 's/cpu  //g' | awk  '{split($0,t," "); for(i=NF;i>0;i--) s = s + $i } END {print 1 - ($4/s) }' | sed 's/\,/\./'`
 CPU_USAGE_PERC=`bc <<< "scale=2; 100 * ${CPU_USAGE_RATE}"`
-CPU_USAGE_PERC=`echo $CPU_USAGE_PERC | sed 's/\./\,/'`
+#CPU_USAGE_PERC=`echo $CPU_USAGE_PERC | sed 's/\./\,/'`
 printf -v CPU_USAGE_PERC "%4.2f" $CPU_USAGE_PERC 
 # Disk usage
 DISK_TOT=`df -m | grep "/dev/" | awk '{disks_size += $2} END {print disks_size}'`
