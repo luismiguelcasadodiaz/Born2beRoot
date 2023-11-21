@@ -164,15 +164,60 @@ sed -i -e '/PASS_MIN_DAYS/ s/0/2/' /etc/login.defs
 The user has to receive a warning message 7 days before their password expires. This is the default value defined by  `PASS_WARN_AGE`
 
 In former days, inside `/etc/login.def` password lenght's setting min and max were configurable. When pluggable authentication module (PAM) started to be used at late 1990s that parameters became obsoleted. So it is inside `etc/pam.d/common-password` 
-• Your password must be at least 10 characters long. 
+
+Your password must be at least 10 characters long.
+```bash
+sed -i -e  '/pam_pwquality.so/ s/retry=3/retry=3 minlen=10/' /etc/pam.d/common-password
+```
+
 It must contain an uppercase letter.
-it must contain  a lowercase letter.
-it must contain a number.
-it must not contain more than 3 consecutive identical characters.
+
+```bash
+sed -i -e  '/pam_pwquality.so/ s/retry=3/retry=3 ucredit=-1 /' /etc/pam.d/common-password
+```
+
+It must contain  a lowercase letter.
+
+```bash
+sed -i -e  '/pam_pwquality.so/ s/retry=3/retry=3 lcredit=-1 /' /etc/pam.d/common-password
+```
+
+It must contain a number.
+
+```bash
+sed -i -e  '/pam_pwquality.so/ s/retry=3/retry=3 dcredit=-1 /' /etc/pam.d/common-password
+```
+
+It must not contain more than 3 consecutive identical characters.
+
+```bash
+sed -i -e  '/pam_pwquality.so/ s/retry=3/retry=3 maxrepeat=3 /' /etc/pam.d/common-password
+```
+
 The password must not include the name of the user.
 
-• The following rule does not apply to the root password: The password must have at least 7 characters that are not part of the former password.
-• Of course, your root password has to comply with this policy.
+```bash
+sed -i -e  '/pam_pwquality.so/ s/retry=3/retry=3 reject_username /' /etc/pam.d/common-password
+```
+
+The following rule does not apply to the root password: 
+
+The password must have at least 7 characters that are not part of the former password.
+
+```bash
+sed -i -e  '/pam_pwquality.so/ s/retry=3/retry=3 difok=7 /' /etc/pam.d/common-password
+```
+
+The root password has to comply with this policy.
+
+```bash
+sed -i -e  '/pam_pwquality.so/ s/retry=3/retry=3 enforce_for_rootedr /' /etc/pam.d/common-password
+```
+
+
+
+
+ 
 
 ##### sudo group policy
 We have to create a 
