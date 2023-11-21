@@ -81,11 +81,13 @@ apt install bc
 
 ### wget nzip nginx 
 
-### php php-curl php-fpm php-bcmath php-gd php-soap php-zip php-curl php-mbstring php-mysqlnd php-gd php-xml php-intl php-zip
+### php php-curl php-fpm php-bcmath php-gd php-soap php-zip php-mbstring php-mysqlnd php-xml php-intl
 
 ### mariadb-server mariadb-client
 
 ### wordpress wget https://wordpress.org/latest.zip
+
+### ftp server
 
 <img width="595" alt="image" src="https://github.com/luismiguelcasadodiaz/Born2beRoot/assets/19540140/f3f5a8a2-f758-4e4f-8885-7177b4a6d118">
 
@@ -98,15 +100,20 @@ apt install bc
 
 ##### firewall
 
-You have to configure your operating system with the UFW (or firewalld for Rocky) firewall and thus leave only port 4242 open.
+You have to configure your operating system with the UFW (or firewalld for Rocky) firewall and thus leave only port 4242 open. 
+I also setup a restrictionto avoid connections on port 22.
 
 ```bash
+ufw deny 22
 ufw allow 4242
 ```
 
 
 
 ##### ssh
+I only have to change some lines in `/etc/ssh/sshd_config` file. This files configures the server that answers incoming ssh connections to my virtual machine.
+
+There is an additional `/etc/ssh/ssh_config` file that relates to outgoing connections from my virtual machine to other server. I do not touch this client side of the openssh package.
 
 A SSH service will be running on port 4242 only. 
 ```bash
@@ -119,7 +126,7 @@ For security reasons, it must not be possible to connect using SSH as root.
 sed -i -e '/#PermitRootLogin/ s/#PermitRootLogin prohibit-password/PermitRootLogin no/' /etc/ssh/sshd_config
 ```
 
-Either it is nor required by the subjec i added this restricction to allow only one user to connect thru ssh
+Either it is not required by the subjec i added this restricction to allow only one user to connect thru ssh
 
 ```bash
 sed -i -e '/^PermitRootLogin no/a AllowUsers luicasad' /etc/ssh/sshd_config
@@ -131,13 +138,32 @@ Another improvement i wanted to try was implement a 2FA. Add this line.
 sed -i -e '/^#PasswordAuthentication/ a ChallengeResponseAuthentication yes' /etc/ssh/sshd_config
 ```
 
+I set a banner to wellcome an ssh conection
+
+```bash
+sed -i -e '/#Banner none/ s/#Banner none/Banner \/etc\/ssh\/global_banner.txt' /etc/ssh/sshd_config
+```
+
 Create groups user42
+
 ##### passwords policy
 
-Your password has to expire every 30 days.
 
-• The minimum number of days allowed before the modification of a password will be set to 2.
-• The user has to receive a warning message 7 days before their password expires.
+Your password has to expire every 30 days. We change `PASS_MAX_DAYS` form `99999` to `30`.
+
+```bash
+sed -i -e '/PASS_MAX_DAYS/ s/99999/30/' /etc/login.defs
+```
+
+The minimum number of days allowed before the modification of a password will be set to 2.We change `PASS_MIN_DAYS` form `0` to `2`.
+
+```bash
+sed -i -e '/PASS_MIN_DAYS/ s/0/2/' /etc/login.defs
+```
+
+The user has to receive a warning message 7 days before their password expires. This is the default value defined by  `PASS_WARN_AGE`
+
+In former days, inside `/etc/login.def` password lenght's setting min and max were configurable. When pluggable authentication module (PAM) started to be used at late 1990s that parameters became obsoleted. So it is inside `etc/pam.d/common-password` 
 • Your password must be at least 10 characters long. 
 It must contain an uppercase letter.
 it must contain  a lowercase letter.
@@ -149,7 +175,11 @@ The password must not include the name of the user.
 • Of course, your root password has to comply with this policy.
 
 ##### sudo group policy
+We have to create a 
+
 Authentication using sudo has to be limited to 3 attempts in the event of an incorrect password.
+
+```Defaults
 
 A custom message of your choice has to be displayed if an error due to a wrong password occurs when using sudo.
 
@@ -288,6 +318,8 @@ IP_ADDRESS=`hostname -I`
 ```bash
 SUDO_COMMANDS=`sudo journalctl  /usr/bin/sudo | grep COMMAND | wc -l`
 ```
+### Bonus configuration
+
 
 ## Sgoinfre usage conditions
 
@@ -333,6 +365,11 @@ Remove orphaned dependencies from system
 ```bash
 apt autoremove
 ```
+
+##### dpkg
+
+`dpkg -l` list all installed packages and its status
+
 
 ##### ufw
 Delete rule
