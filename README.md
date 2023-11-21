@@ -200,7 +200,6 @@ The password must not include the name of the user.
 sed -i -e  '/pam_pwquality.so/ s/retry=3/retry=3 reject_username /' /etc/pam.d/common-password
 ```
 
-The following rule does not apply to the root password: 
 
 The password must have at least 7 characters that are not part of the former password.
 
@@ -220,19 +219,34 @@ sed -i -e  '/pam_pwquality.so/ s/retry=3/retry=3 enforce_for_rootedr /' /etc/pam
  
 
 ##### sudo group policy
-We have to create a 
+According to what we read when we execute `visudo` commnad, we have to create a `configuration` file,  inside `/etc/sudoers.d` folder, where we will insert a set of directives.
 
 Authentication using sudo has to be limited to 3 attempts in the event of an incorrect password.
 
-```Defaults
+```bash
+echo "Defaults  passwd_tries=3" >  /etc/sudoers.d/configuration
+```
 
 A custom message of your choice has to be displayed if an error due to a wrong password occurs when using sudo.
 
-• Each action using sudo has to be archived, both inputs and outputs. The log file has to be saved in the /var/log/sudo/ folder.
+```bash
+echo "Defaults  badpass_message='Password for luicasad42 virtual machine sudo mode INCORRECT'" >> /etc/sudoers.d/configuration
+```
 
-• The TTY mode has to be enabled for security reasons.
+Each action using sudo has to be archived, both inputs and outputs. By default, all sudo incidents will be logged in /var/log/auth.log. However, it is not dedicated to sudo logs. 
 
-• For security reasons too, the paths that can be used by sudo must be restricted. Example: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
+```bash
+mkdir /var/log/sudo
+touch /var/log/sudo/logfile
+echo "Defaults  logfile="/var/log/sudo/logfile" >> /etc/sudoers.d/configuration
+echo "Defaults  log_input, log_output" >> /etc/sudoers.d/configuration
+echo "Defaults  iolog_dir="/var/log/sudo" >> /etc/sudoers.d/configuration
+```
+
+
+The TTY mode has to be enabled for security reasons.
+
+For security reasons too, the paths that can be used by sudo must be restricted. Example: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
 
 
 ##### Cron
