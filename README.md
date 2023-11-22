@@ -56,10 +56,7 @@ At installation time I opted to install nothing
 apt install sudo
 ```
 
-### ssh-server
-```bash
-sudo apt install openssh-server
-```
+### ssh-server `apt install openssh-server`
 
 ### firewall
 ```bash
@@ -271,7 +268,12 @@ echo "Defaults  iolog_dir="/var/log/sudo" >> /etc/sudoers.d/configuration
 ```
 
 
-The TTY mode has to be enabled for security reasons.
+The TTY mode has to be enabled for security reasons. With this only user logged in a terminal can use sudo privileges. A cron job would not be entitled to gain privileges when requiretty is present.
+
+```bash
+echo "Defaults requiretty" >> /etc/sudoers.d/configuration
+```
+
 
 For security reasons too, the paths that can be used by sudo must be restricted. Example: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
 
