@@ -153,7 +153,7 @@ I installed a google autenticator library. Locally it will generate  a time base
 I have to pass the local key to my smartphone google autenticator app. I do that with a ssh conection from my hots machine to the virtual machine. I do that cause the screen of the virtual machine running in Virtualbox does not draw correctly a readable QR for my smartphone. I did not managed to do it, so I logged thru ssh for configuration purpouses.
 
 
-key using a shared key wiht online goolge authenticator.
+key using a shared key wiht online goolge authenticator. 
 
 will generate a six digits code for the
 git
