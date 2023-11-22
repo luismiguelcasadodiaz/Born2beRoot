@@ -56,7 +56,10 @@ At installation time I opted to install nothing
 apt install sudo
 ```
 
-### ssh-server `apt install openssh-server`
+### ssh-server
+```bash
+apt install openssh-server
+```
 
 ### firewall
 ```bash
@@ -245,6 +248,11 @@ sed -i -e  '/pam_pwquality.so/ s/retry=3/retry=3 enforce_for_rootedr /' /etc/pam
 ##### sudo group policy
 According to what we read when we execute `visudo` command, we have to create a `configuration` file,  inside `/etc/sudoers.d` folder, where we will insert a set of directives.
 
+To know which editor is configured as `visudo` you can execute 
+```bash
+sudo update-alternatives --config editor
+```
+
 Authentication using sudo has to be limited to 3 attempts in the event of an incorrect password.
 
 ```bash
@@ -275,7 +283,9 @@ echo "Defaults requiretty" >> /etc/sudoers.d/configuration
 ```
 
 
-For security reasons too, the paths that can be used by sudo must be restricted. Example: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
+For security reasons too, the paths that can be used by sudo must be restricted. `Defaults secure_path` -defines the PATH environment variable that sudo uses instead of the user’s PATH environment.
+
+Example: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
 
 
 ##### Cron
