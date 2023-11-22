@@ -136,6 +136,7 @@ Another improvement i wanted to try was implement a 2FA. Add this line.
 
 ```bash
 sed -i -e '/^#PasswordAuthentication/ a ChallengeResponseAuthentication yes' /etc/ssh/sshd_config
+sed -i -e '/^#PasswordAuthentication/ a ChallengeResponseAuthentication yes' /etc/ssh/sshd_config
 ```
 
 I set a banner to wellcome an ssh conection
@@ -143,6 +144,30 @@ I set a banner to wellcome an ssh conection
 ```bash
 sed -i -e '/#Banner none/ s/#Banner none/Banner \/etc\/ssh\/global_banner.txt' /etc/ssh/sshd_config
 ```
+
+##### ssh 2FA
+Another improvement i wanted to try was implement a 2FA. 
+
+I installed a google autenticator library. Locally it will generate  a time base token. The token is generated using a local key for the local user plus a UTC timestamp..
+
+I have to pass the local key to my smartphone google autenticator app. I do that with a ssh conection from my hots machine to the virtual machine. I do that cause the screen of the virtual machine running in Virtualbox does not draw correctly a readable QR for my smartphone. I did not managed to do it, so I logged thru ssh for configuration purpouses.
+
+
+key using a shared key wiht online goolge authenticator.
+
+will generate a six digits code for the
+git
+``` bash
+apt install -y libpam-google-authenticator
+```
+
+Add this line.
+
+```bash
+sed -i -e '/^#PasswordAuthentication/ a ChallengeResponseAuthentication yes' /etc/ssh/sshd_config
+sed -i -e '/#UsePAM/ s/#UsePAM yes/UsePAM yes/' /etc/ssh/sshd_config
+```
+
 
 Create groups user42
 
