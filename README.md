@@ -132,13 +132,6 @@ Either it is not required by the subjec i added this restricction to allow only 
 sed -i -e '/^PermitRootLogin no/a AllowUsers luicasad' /etc/ssh/sshd_config
 ```
 
-Another improvement i wanted to try was implement a 2FA. Add this line.
-
-```bash
-sed -i -e '/^#PasswordAuthentication/ a ChallengeResponseAuthentication yes' /etc/ssh/sshd_config
-sed -i -e '/^#PasswordAuthentication/ a ChallengeResponseAuthentication yes' /etc/ssh/sshd_config
-```
-
 I set a banner to wellcome an ssh conection
 
 ```bash
@@ -148,20 +141,19 @@ sed -i -e '/#Banner none/ s/#Banner none/Banner \/etc\/ssh\/global_banner.txt' /
 ##### ssh 2FA
 Another improvement i wanted to try was implement a 2FA. 
 
-I installed a google autenticator library. Locally it will generate  a time base token. The token is generated using a local key for the local user plus a UTC timestamp..
+I installed a google autenticator library. 
 
-I have to pass the local key to my smartphone google autenticator app. I do that with a ssh conection from my hots machine to the virtual machine. I do that cause the screen of the virtual machine running in Virtualbox does not draw correctly a readable QR for my smartphone. I did not managed to do it, so I logged thru ssh for configuration purpouses.
-
-
-key using a shared key wiht online goolge authenticator. 
-
-will generate a six digits code for the
-git
-``` bash
+```bash
 apt install -y libpam-google-authenticator
 ```
+Locally it will generate  a time base token. The token is generated using a local key for the local user plus a UTC timestamp.
 
-Add this line.
+I have to pass the local key to my smartphone google autenticator app. I do that with a ssh conection from my host machine to the virtual machine. I do that cause the screen of the virtual machine running in Virtualbox does not draw correctly a readable QR for my smartphone. I did not managed to do it, so I logged thru ssh for configuration purpouses.
+
+Once Google Autenticator app in my Smartphone read mi local key QR, starts to generated timebased tokens. 
+
+
+Add this lines to `\etc\ssh\sshd_config` ans ssh will ask for tokens after a correct password.
 
 ```bash
 sed -i -e '/^#PasswordAuthentication/ a ChallengeResponseAuthentication yes' /etc/ssh/sshd_config
