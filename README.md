@@ -1,8 +1,8 @@
 # Born2beRoot
 ## Prepare space for your virtual machine
-Remember that disk space we have in our 42 sessions is limited to 5 GB. It is enough for the mandatory part of this proyect. You can stop here and do nothing about it or, in case you plan to do the bonus part, you can use a permanent 30 GB disk quota you are entitled to in /sgoinfre/Perso. (see below conditions to use it without sad surprises)
+Remember that the disk space we have in our 42 sessions is limited to 5 GB. It is enough for the mandatory part of this project. You can stop here and do nothing about it or, in case you plan to do the bonus part, you can use a permanent 30 GB disk quota you are entitled to in /sgoinfre/Perso. (see below conditions to use it without sad surprises)
 
-It is permanent while you are using it. In case you don use it during 60 day, your Personal disk quota will be removed. do not forget to chmo -R 700 your personal folder. Keep contest belon 30 GB
+It is permanent while you are using it. In case you don't use it within 60 days, your Personal disk quota will be removed. do not forget to chmo -R 700 to your personal folder. Keep contest belon 30 GB
 
 ```bash
 mkdir /sgoinfre/Perso/yourusername
@@ -11,9 +11,9 @@ Then use this path to save the image of your virtual machine (VM).
 
 ## Virtual box network configuration 
 
-An important decision for this proyect is about virtual machine conectivity. Virtualbox offers several option.
-I selected bridget cause i want to access Born2beRoot from other computers in my network 
-[In this instructions] (https://www.virtualbox.org/manual/ch06.html) you find a summary table wiht in/out connectivity posibilities offered by each option
+An important decision for this project is about virtual machine connectivity. Virtualbox offers several options.
+I selected Bridget cause I want to access Born2beRoot from other computers in my network 
+[In this instructions] (https://www.virtualbox.org/manual/ch06.html) you find a summary table with in/out connectivity possibilities offered by each option
 
 |Mode      | VM-->Host | VM<--Host  |VM1<-->VM2|VM-->Net/LAN|VM<--Net/LAN|
 |:---------|:---------:|:----------:|:--------:|:----------:|:----------:|
@@ -28,42 +28,36 @@ Bridge connection
 ![image](https://github.com/luismiguelcasadodiaz/Born2beRoot/assets/19540140/719c2a59-267d-40d9-af8d-a1bc2ace4f1d)
 
 
+### Partition time
+WAIT!!!! Mandatory or bonus??? watch the subject to see the partition scheme. Worth parting VM's hard disk as the bonus request to avoid configuring a new machine for the bonus later.
+
+<img width="819" alt="image" src="https://github.com/luismiguelcasadodiaz/Born2beRoot/assets/19540140/679210af-50b8-4d28-9f84-fa176d85550b">
+
+During the partition, if manual .... first create 3 primary partitions, then encrypt one (it will take time to overwrite it with random data, later use LVM.
+
 
 ## Minimal installation
 
 [debian-12.2.0-amd64-netinst.iso of size 658 MB](https://www.debian.org/CD/netinst/) was my election. 
-One time consuming task in this proyect is the VM setup. The bigger the iso image, the longer to setup.
-It is true that i get an almost bare metal tha forces me to install one by one required utilities for this project. 
+One time-consuming task in this project is the VM setup. The bigger the iso image, the longer to set up.
+It is true that I got an almost bare metal that forced me to install the required packages for this project individually one by one. 
 25 seconds to download 628 MB. I moved the image to my /sgoinfre/Perso/ directory
 
-At installation time i opted for install nothing
+At installation time I opted to install nothing
 
 
 <img width="782" alt="image" src="https://github.com/luismiguelcasadodiaz/Born2beRoot/assets/19540140/294d6cb0-708d-43fb-81f8-8ecc15459e55">
 
-### Partition time
-WAIT!!!! Mandatory or bonus??? watch the subjecT to see partition scheme. Worth to part VM's harddisk as bonus request to avoid configure a new machine for the bonus later.
+## Mandatory project installation
 
-<img width="819" alt="image" src="https://github.com/luismiguelcasadodiaz/Born2beRoot/assets/19540140/679210af-50b8-4d28-9f84-fa176d85550b">
-
-During the partition if manual .... first create 3 primary partitions, then encrypt one (it will take time overwite it with random data, later use LVM.
-
-## Additional Instalation
-### git installation
-
-I decide to keep in a git repository the script to configure de server as requested in de proyect
+### sudo
 
 ```bash
 apt install sudo
-adduser luicasad sudo    //logout and login
 ```
-
-
-`apt-get install git`
 
 ### ssh-server
 ```bash
-sudo apt update
 sudo apt install openssh-server
 ```
 
@@ -72,12 +66,12 @@ sudo apt install openssh-server
 apt install ufw
 ```
 
-### basic calculator
+### basic calculator (i need to for the script)
 ```bash
 apt install bc
 ```
 
-## bonus instalation
+## bonus installation
 
 ### wget nzip nginx 
 
@@ -94,14 +88,24 @@ apt install bc
 <img width="595" alt="image" src="https://github.com/luismiguelcasadodiaz/Born2beRoot/assets/19540140/7a6d1dac-0a56-406e-9a45-97e5bc17c876">
 
 
+## Additional Installation
+
+### git installation
+
+I decided to keep the script to configure the server as requested in de project in a git repository.
+
+```bash
+apt-get install git
+```
+
 
 
 ## Configuration
 
 ##### firewall
 
-You have to configure your operating system with the UFW (or firewalld for Rocky) firewall and thus leave only port 4242 open. 
-I also setup a restrictionto avoid connections on port 22.
+You have to configure your operating system with the UFW (or Firewalla for Rocky) firewall and thus leave only port 4242 open. 
+I also set up a restriction to avoid connections on port 22.
 
 ```bash
 ufw deny 22
@@ -111,11 +115,12 @@ ufw allow 4242
 
 
 ##### ssh
-I only have to change some lines in `/etc/ssh/sshd_config` file. This files configures the server that answers incoming ssh connections to my virtual machine.
+I only have to change some lines in `/etc/ssh/sshd_config` file. This file configures the server that answers incoming ssh connections to my virtual machine.
 
-There is an additional `/etc/ssh/ssh_config` file that relates to outgoing connections from my virtual machine to other server. I do not touch this client side of the openssh package.
+There is an additional `/etc/ssh/ssh_config` file that relates to outgoing connections from my virtual machine to another server. I do not touch this client side of the OpenSSH package.
 
-A SSH service will be running on port 4242 only. 
+An SSH service will be running on port 4242 only.
+
 ```bash
 sed -i -e '/#Port 22/ s/#Port 22/Port 4242/' /etc/ssh/sshd_config
 ```
@@ -126,34 +131,34 @@ For security reasons, it must not be possible to connect using SSH as root.
 sed -i -e '/#PermitRootLogin/ s/#PermitRootLogin prohibit-password/PermitRootLogin no/' /etc/ssh/sshd_config
 ```
 
-Either it is not required by the subjec i added this restricction to allow only one user to connect thru ssh
+Either it is not required by the subject i added this restriction to allow only one user to connect through SSH
 
 ```bash
 sed -i -e '/^PermitRootLogin no/a AllowUsers luicasad' /etc/ssh/sshd_config
 ```
 
-I set a banner to wellcome an ssh conection
+I set a banner to welcome an ssh connection
 
 ```bash
 sed -i -e '/#Banner none/ s/#Banner none/Banner \/etc\/ssh\/global_banner.txt' /etc/ssh/sshd_config
 ```
 
 ##### ssh 2FA
-Another improvement i wanted to try was implement a 2FA. 
+Another improvement I wanted to try was to implement a 2FA. 
 
-I installed a google autenticator library. 
+I installed a Google authenticator library. 
 
 ```bash
 apt install -y libpam-google-authenticator
 ```
-Locally it will generate  a time base token. The token is generated using a local key for the local user plus a UTC timestamp.
+Locally it will generate  a time-based token. The token is generated using a local key for the local user plus a UTC timestamp.
 
-I have to pass the local key to my smartphone google autenticator app. I do that with a ssh conection from my host machine to the virtual machine. I do that cause the screen of the virtual machine running in Virtualbox does not draw correctly a readable QR for my smartphone. I did not managed to do it, so I logged thru ssh for configuration purpouses.
+I have to pass the local key to my smartphone Google Authenticator app. I do that with an SSH connection from my host machine to the virtual machine. I do that cause the screen of the virtual machine running in Virtualbox does not draw a readable QR for my smartphone. I did not manage to do it, so I logged through SSH for configuration purposes.
 
-Once Google Autenticator app in my Smartphone read mi local key QR, starts to generated timebased tokens. 
+Once the Google Authenticator app in my Smartphone reads my local key QR, starts to generate time-based tokens. 
 
 
-Add this lines to `\etc\ssh\sshd_config` ans ssh will ask for tokens after a correct password.
+Add these lines to `\etc\ssh\sshd_config` and ssh will ask for tokens after a correct password.
 
 ```bash
 sed -i -e '/^#PasswordAuthentication/ a ChallengeResponseAuthentication yes' /etc/ssh/sshd_config
@@ -162,6 +167,7 @@ sed -i -e '/#UsePAM/ s/#UsePAM yes/UsePAM yes/' /etc/ssh/sshd_config
 
 
 Create groups user42
+adduser luicasad sudo    //logout and login
 
 ##### passwords policy
 
@@ -172,7 +178,7 @@ Your password has to expire every 30 days. We change `PASS_MAX_DAYS` form `99999
 sed -i -e '/PASS_MAX_DAYS/ s/99999/30/' /etc/login.defs
 ```
 
-The minimum number of days allowed before the modification of a password will be set to 2.We change `PASS_MIN_DAYS` form `0` to `2`.
+The minimum number of days allowed before the modification of a password will be set to 2. We change `PASS_MIN_DAYS` form `0` to `2`.
 
 ```bash
 sed -i -e '/PASS_MIN_DAYS/ s/0/2/' /etc/login.defs
@@ -180,7 +186,7 @@ sed -i -e '/PASS_MIN_DAYS/ s/0/2/' /etc/login.defs
 
 The user has to receive a warning message 7 days before their password expires. This is the default value defined by  `PASS_WARN_AGE`
 
-In former days, inside `/etc/login.def` password lenght's setting min and max were configurable. When pluggable authentication module (PAM) started to be used at late 1990s that parameters became obsoleted. So it is inside `etc/pam.d/common-password` 
+In former days, inside `/etc/login.def` password length's settings min and max were configurable. When pluggable authentication modules (PAM) started to be used in the late 1990s those parameters became obsolete. So it is inside `etc/pam.d/common-password` 
 
 Your password must be at least 10 characters long.
 ```bash
@@ -236,7 +242,7 @@ sed -i -e  '/pam_pwquality.so/ s/retry=3/retry=3 enforce_for_rootedr /' /etc/pam
  
 
 ##### sudo group policy
-According to what we read when we execute `visudo` commnad, we have to create a `configuration` file,  inside `/etc/sudoers.d` folder, where we will insert a set of directives.
+According to what we read when we execute `visudo` command, we have to create a `configuration` file,  inside `/etc/sudoers.d` folder, where we will insert a set of directives.
 
 Authentication using sudo has to be limited to 3 attempts in the event of an incorrect password.
 
