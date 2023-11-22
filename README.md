@@ -153,7 +153,11 @@ apt install -y libpam-google-authenticator
 ```
 Locally it will generate  a time-based token. The token is generated using a local key for the local user plus a UTC timestamp.
 
-I have to pass the local key to my smartphone Google Authenticator app. I do that with an SSH connection from my host machine to the virtual machine. I do that cause the screen of the virtual machine running in Virtualbox does not draw a readable QR for my smartphone. I did not manage to do it, so I logged through SSH for configuration purposes.
+I have to pass the local key to my smartphone Google Authenticator app. I do that with an SSH connection from my host machine to the virtual machine. I do that cause the screen of the virtual machine running in Virtualbox does not draw a readable QR for my smartphone. I did not manage to do it, so I logged through SSH for configuration purposes. The command to generate QR for the local key to transfer to your smartphone is:
+
+```bash
+google-authenticator
+````
 
 Once the Google Authenticator app in my Smartphone reads my local key QR, starts to generate time-based tokens. 
 
