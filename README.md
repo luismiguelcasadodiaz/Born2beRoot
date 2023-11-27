@@ -2,7 +2,7 @@
 ## Prepare space for your virtual machine
 Remember that the disk space we have in our 42 sessions is limited to 5 GB. It is enough for the mandatory part of this project. You can stop here and do nothing about it or, in case you plan to do the bonus part, you can use a permanent 30 GB disk quota you are entitled to in /sgoinfre/Perso. (see below conditions to use it without sad surprises)
 
-It is permanent while you are using it. In case you don't use it within 60 days, your Personal disk quota will be removed. do not forget to chmo -R 700 to your personal folder. Keep contest belon 30 GB
+It is permanent while you are using it. In case you don't use it within 60 days, your Personal disk quota will be removed. do not forget to chmod -R 700 to your personal folder. Keep contest belon 30 GB
 
 ```bash
 mkdir /sgoinfre/Perso/yourusername
