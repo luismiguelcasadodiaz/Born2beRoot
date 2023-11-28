@@ -68,6 +68,10 @@ apt install openssh-server
 ```bash
 apt install ufw
 ```
+### to improve password rules
+```bash
+apt install libpam-pwquality
+```
 
 ### basic calculator (i need to for the script)
 ```bash
