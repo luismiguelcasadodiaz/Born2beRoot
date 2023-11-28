@@ -12,8 +12,9 @@ sed -i -e '/#Port 22/ s/#Port 22/Port 4242/' /etc/ssh/sshd_config
 sed -i -e '/#PermitRootLogin/ s/#PermitRootLogin prohibit-password/PermitRootLogin no/' /etc/ssh/sshd_config
 sed -i -e '/^PermitRootLogin no/a AllowUsers luicasad' /etc/ssh/sshd_config
 sed -i -e '/#Banner none/ s/#Banner none/Banner \/etc\/ssh\/global_banner.txt/' /etc/ssh/sshd_config
+cp /root/Born2beRoot/global_banner.txt /etc/ssh
 # 2FA over ssh
-sed -i -e '/^#PasswordAuthentication/a ChallengeResponseAutenthication yes' /etc/ssh/sshd_config
+sed -i -e '/^#PasswordAuthentication/a ChallengeResponseAuthentication yes' /etc/ssh/sshd_config
 sed -i -e '/#UsePAM/ s/#UsePAM yes/UsePAM yes/' /etc/ssh/sshd_config
 sed -i -e '/common-auth/a auth required pam_google_authenticator.so' /etc/pam.d/sshd
 
