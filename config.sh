@@ -3,9 +3,9 @@
 # Back up of debian original configuration files.
 
 cp /etc/ssh/sshd_config /etc/ssh/sshd_config.$EPOCHSECONDS.bck
-cp /etc/pam.d/sshd /etc/pam.d/sshd.$EPOCHSECONDS.bck
-cp /etc/login.defs /etc/login.defs$EPOCHSECONDS.bck
+cp /etc/login.defs /etc/login.defs.$EPOCHSECONDS.bck
 cp /etc/pam.d/common-password /etc/pam.d/common-password.$EPOCHSECONDS.bck
+cp /etc/pam.d/sshd /etc/pam.d/sshd.$EPOCHSECONDS.bck
 
 # ssh server configuration.
 sed -i -e '/#Port 22/ s/#Port 22/Port 4242/' /etc/ssh/sshd_config
