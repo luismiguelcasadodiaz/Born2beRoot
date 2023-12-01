@@ -13,6 +13,7 @@ sed -i -e '/#PermitRootLogin/ s/#PermitRootLogin prohibit-password/PermitRootLog
 sed -i -e '/^PermitRootLogin no/a AllowUsers luicasad' /etc/ssh/sshd_config
 sed -i -e '/#Banner none/ s/#Banner none/Banner \/etc\/ssh\/global_banner.txt/' /etc/ssh/sshd_config
 cp /root/Born2beRoot/global_banner.txt /etc/ssh
+
 # 2FA over ssh
 sed -i -e '/^#PasswordAuthentication/a ChallengeResponseAuthentication yes' /etc/ssh/sshd_config
 sed -i -e '/#UsePAM/ s/#UsePAM yes/UsePAM yes/' /etc/ssh/sshd_config
@@ -29,7 +30,6 @@ echo "Defaults log_input, log_output" >> /etc/sudoers.d/configuration
 echo "Defaults requiretty" >> /etc/sudoers.d/configuration
 echo "Defaults secure_path='/usr/sbin:/usr/bin:/sbin:/bin'" >> /etc/sudoers.d/configuration
 
-
 #set up strong password policy.
 sed -i -e '/PASS_MAX_DAYS/ s/99999/30/' /etc/login.defs
 sed -i -e '/PASS_MIN_DAYS/ s/0/2/' /etc/login.defs
@@ -42,10 +42,12 @@ sed -i -e '/pam_pwquality.so/ s/retry=3/retry=3 dcredit=-1 /' /etc/pam.d/common-
 sed -i -e '/pam_pwquality.so/ s/retry=3/retry=3 lcredit=-1 /' /etc/pam.d/common-password
 sed -i -e '/pam_pwquality.so/ s/retry=3/retry=3 ucredit=-1 /' /etc/pam.d/common-password
 
-
 # set up firewall rules.
 ufw deny 22
 ufw allow 4242
+
+# set crontab file
+sed -i -e '$a*/10 * * * * root sh /root/Born2beRoot/monitoring.sh' /etc/crontab
 
 # restart all services
 service sshd restart
