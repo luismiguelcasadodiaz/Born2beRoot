@@ -299,10 +299,10 @@ Authentication using sudo has to be limited to 3 attempts in the event of an inc
 echo "Defaults  passwd_tries=3" >  /etc/sudoers.d/configuration
 ```
 
-A custom message of your choice has to be displayed if an error due to a wrong password occurs when using sudo.
+A custom message of your choice has to be displayed if an error due to a wrong password occurs when using sudo. Be aware of the inverte usage of `'` and `"` in this command. This is due to the fact of sudo requires the error message to be between quotes.
 
 ```bash
-echo "Defaults  badpass_message='Password for luicasad42 virtual machine sudo mode INCORRECT'" >> /etc/sudoers.d/configuration
+echo 'Defaults  badpass_message="Password for luicasad42 virtual machine sudo mode INCORRECT"' >> /etc/sudoers.d/configuration
 ```
 
 Each action using sudo has to be archived, both inputs and outputs. By default, all sudo incidents will be logged in /var/log/auth.log. However, it is not dedicated to sudo logs. 
