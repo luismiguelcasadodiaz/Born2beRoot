@@ -52,6 +52,7 @@ sed -i -e '$a*/10 * * * * root sh /root/Born2beRoot/monitoring.sh' /etc/crontab
 # restart all services
 service sshd restart
 service ufw restart
+service cron restart
 
 #Create user's grup user42
 addgroup user42
