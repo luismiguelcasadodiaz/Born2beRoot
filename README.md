@@ -109,6 +109,8 @@ apt-get install git
 
 ## Configuration
 
+---
+
 ##### firewall
 
 You have to configure your operating system with the UFW (or Firewalla for Rocky) firewall and thus leave only port 4242 open. 
@@ -119,7 +121,7 @@ ufw deny 22
 ufw allow 4242
 ```
 
-
+---
 
 ##### ssh
 I only have to change some lines in `/etc/ssh/sshd_config` file. This file configures the server that answers incoming ssh connections to my virtual machine.
@@ -150,6 +152,18 @@ I set a banner to welcome an ssh connection
 sed -i -e '/#Banner none/ s/#Banner none/Banner \/etc\/ssh\/global_banner.txt' /etc/ssh/sshd_config
 ```
 
+Gathering all ssh settings results this:
+
+```bash
+sed -i -e '/#Port 22/ s/#Port 22/Port 4242/' /etc/ssh/sshd_config
+sed -i -e '/#PermitRootLogin/ s/#PermitRootLogin prohibit-password/PermitRootLogin no/' /etc/ssh/sshd_config
+sed -i -e '/^PermitRootLogin no/a AllowUsers luicasad' /etc/ssh/sshd_config
+sed -i -e '/#Banner none/ s/#Banner none/Banner \/etc\/ssh\/global_banner.txt/' /etc/ssh/sshd_config
+cp /root/Born2beRoot/global_banner.txt /etc/ssh
+```
+
+---
+
 ##### ssh 2FA
 Another improvement I wanted to try was to implement a 2FA. 
 
@@ -177,11 +191,19 @@ sed -i -e '/^#PasswordAuthentication/ a ChallengeResponseAuthentication yes' /et
 
 `sed -i -e '/#UsePAM/ s/#UsePAM yes/UsePAM yes/' /etc/ssh/sshd_config` is requested in case that openssh-server default configuration did not use PAM as authentication method.
 
+Add this line to `/etc/pam.d/sshd`
+
+```bash
+sed -i -e '/common-auth/a auth required pam_google_authenticator.so' /etc/pam.d/sshd
+```
+
+
 Create groups user42
 adduser luicasad sudo    //logout and login
 
-##### passwords policy
+---
 
+##### passwords policy
 
 Your password has to expire every 30 days. We change `PASS_MAX_DAYS` form `99999` to `30`.
 
@@ -234,7 +256,6 @@ The password must not include the name of the user.
 sed -i -e  '/pam_pwquality.so/ s/retry=3/retry=3 reject_username /' /etc/pam.d/common-password
 ```
 
-
 The password must have at least 7 characters that are not part of the former password.
 
 ```bash
@@ -247,10 +268,22 @@ The root password has to comply with this policy.
 sed -i -e  '/pam_pwquality.so/ s/retry=3/retry=3 enforce_for_rootedr /' /etc/pam.d/common-password
 ```
 
+Gathering all password restrictions settings results in this:
 
+```bash
+sed -i -e '/PASS_MAX_DAYS/ s/99999/30/' /etc/login.defs
+sed -i -e '/PASS_MIN_DAYS/ s/0/2/' /etc/login.defs
+sed -i -e '/PASS_WARN_AGE/ s/7/7/' /etc/login.defs
+sed -i -e '/pam_pwquality.so/ s/retry=3/retry=3 enforce_for_root/' /etc/pam.d/common-password
+sed -i -e '/pam_pwquality.so/ s/retry=3/retry=3 difok=7 /' /etc/pam.d/common-password
+sed -i -e '/pam_pwquality.so/ s/retry=3/retry=3 reject_username /' /etc/pam.d/common-password
+sed -i -e '/pam_pwquality.so/ s/retry=3/retry=3 maxrepeat=3 /' /etc/pam.d/common-password
+sed -i -e '/pam_pwquality.so/ s/retry=3/retry=3 dcredit=-1 /' /etc/pam.d/common-password
+sed -i -e '/pam_pwquality.so/ s/retry=3/retry=3 lcredit=-1 /' /etc/pam.d/common-password
+sed -i -e '/pam_pwquality.so/ s/retry=3/retry=3 ucredit=-1 /' /etc/pam.d/common-password
+```
 
-
- 
+--- 
 
 ##### sudo group policy
 According to what we read when we execute `visudo` command, we have to create a `configuration` file,  inside `/etc/sudoers.d` folder, where we will insert a set of directives.
@@ -274,14 +307,21 @@ echo "Defaults  badpass_message='Password for luicasad42 virtual machine sudo mo
 
 Each action using sudo has to be archived, both inputs and outputs. By default, all sudo incidents will be logged in /var/log/auth.log. However, it is not dedicated to sudo logs. 
 
+I create a `logfile` for logging either input and output messages to/from sudo. I create the file in folder `/var/log/sudo`.
+
 ```bash
 mkdir /var/log/sudo
 touch /var/log/sudo/logfile
-echo "Defaults  logfile="/var/log/sudo/logfile" >> /etc/sudoers.d/configuration
-echo "Defaults  log_input, log_output" >> /etc/sudoers.d/configuration
-echo "Defaults  iolog_dir="/var/log/sudo" >> /etc/sudoers.d/configuration
+echo "Defaults iolog_dir=/var/log/sudo" >> /etc/sudoers.d/configuration
+echo "Defaults logfile=/var/log/sudo/logfile" >> /etc/sudoers.d/configuration
+echo "Defaults log_input, log_output" >> /etc/sudoers.d/configuration
 ```
 
+A security setting is to force to have a tty connection to the machine to be entitled to use sudo command. This will avoid that a simple cron script upscales privileges.
+
+```bash
+echo "Defaults requiretty" >> /etc/sudoers.d/configuration
+```
 
 The TTY mode has to be enabled for security reasons. With this only user logged in a terminal can use sudo privileges. A cron job would not be entitled to gain privileges when requiretty is present.
 
@@ -289,11 +329,25 @@ The TTY mode has to be enabled for security reasons. With this only user logged 
 echo "Defaults requiretty" >> /etc/sudoers.d/configuration
 ```
 
+Another security setting is to restrict the path to commands that a sudoer can use.
 
-For security reasons too, the paths that can be used by sudo must be restricted. `Defaults secure_path` -defines the PATH environment variable that sudo uses instead of the user’s PATH environment.
+```bash
+echo "Defaults secure_path='/usr/sbin:/usr/bin:/sbin:/bin'" >> /etc/sudoers.d/configuration
+```
 
-Example: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
+Gathering all sudo configuration instruction results in this:
 
+```bash
+mkdir /var/log/sudo
+touch /var/log/sudo/logfile
+echo "Defaults passwd_tries=3" >  /etc/sudoers.d/configuration
+echo "Defaults badpass_message='INCORRECT Password for sudo mode'" >> /etc/sudoers.d/configuration
+echo "Defaults iolog_dir=/var/log/sudo" >> /etc/sudoers.d/configuration
+echo "Defaults logfile=/var/log/sudo/logfile" >> /etc/sudoers.d/configuration
+echo "Defaults log_input, log_output" >> /etc/sudoers.d/configuration
+echo "Defaults requiretty" >> /etc/sudoers.d/configuration
+echo "Defaults secure_path='/usr/sbin:/usr/bin:/sbin:/bin'" >> /etc/sudoers.d/configuration
+```
 
 ##### Cron
 
@@ -313,6 +367,8 @@ sudo ufw enable
 sudo ufw limit ssh
 
 `ip addr show`
+
+---
 
 #### Monitoring Script
 
@@ -423,6 +479,9 @@ IP_ADDRESS=`hostname -I`
 ```bash
 SUDO_COMMANDS=`sudo journalctl  /usr/bin/sudo | grep COMMAND | wc -l`
 ```
+
+---
+
 ### Bonus configuration
 
 
