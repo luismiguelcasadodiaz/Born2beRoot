@@ -351,6 +351,9 @@ echo "Defaults secure_path='/usr/sbin:/usr/bin:/sbin:/bin'" >> /etc/sudoers.d/co
 
 ##### Cron
 
+The crontab files edited with `crontab -u <user> -e` are located inside `/var/spool/cron/crontabs` folder.
+A regular-user does not require sudo privileges for scheduling a task.
+A regular user does not require to be logged for the task be executed on a regular basis.
 
 #### Execution
 
