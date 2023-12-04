@@ -24,8 +24,8 @@ CPU_USAGE_RATE=`cat /proc/stat | grep 'cpu ' | sed 's/cpu  //g' | awk  '{split($
 
 # Disk usage
 DISK_TOT=`df -m | grep "/dev/" | awk '{disks_size += $2} END {printf ("%.2fGB"), disks_size/1024}'`
-DISK_USE=`df -m | grep "/dev/" | awk '{disks_size += $3} END {print disks_size}'`
-DISK_PER=`df -m | grep "/dev/" | awk '{disks_t += $3} {disks_u += $3} END {printf (%d), 100*disks_u/disk_t}'`
+DISK_USE=`df -m | grep "/dev/" | awk '{disks_size += $3} END {printf ("%.2fGB"), disks_size/1024}'`
+DISK_PER=`df -m | grep "/dev/" | awk '{disks_t += $3} {disks_u += $3} END {printf ("%.2f%%"), 100*disks_u/disk_t}'`
 
 # Boot time
 LAST_BOOT=`who -b | sed 's/[a-z ]*//'`
