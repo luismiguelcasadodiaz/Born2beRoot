@@ -15,10 +15,19 @@ VIRTUAL_CORES=`grep "^processor" /proc/cpuinfo | sort | uniq | wc -l `
 # Memory usage
 TOTAL_RAM=`cat  /proc/meminfo | grep MemTotal | sed 's/MemTotal://' | sed 's/ //g' | sed 's/kB//'`
 AVAI_RAM=`cat  /proc/meminfo | grep MemAvailable | sed 's/MemAvailable://' | sed 's/ //g' | sed 's/kB//'`
+#USED_RAM=$(expr ((${TOTAL_RAM} - ${AVAI_RAM})) )
+USED_RAM=$(expr $TOTAL_RAM - $AVAI_RAM)
+USED_RAM=$(expr $USED_RAM /1024 / 1024) 
+
+#CPU USAGE
+CPU_USAGE_RATE=$(cat /proc/stat | grep 'cpu ' | sed 's/cpu  //g' | awk  '{split($0,t," "); for(i=NF;i>0;i--) s = s + $i } END {printf ("%.2f"),(1 - ($4/s)) }')
 
 # Disk usage
-DISK_TOT=`df -m | grep "/dev/" | awk '{disks_size += $2} END {printf (), disks_size/1024}'`
-DISK_USE=`df -m | grep "/dev/" | awk '{disks_size += $3} END {print disks_size}'`
+DISK_TOT=`df -m | grep "/dev/" | awk '{disks_size += $2} END {printf ("%.2fGB"), disks_size/1024}'`
+DISK_USE=`df -m | grep "/dev/" | awk '{disks_size += $3} END {printf ("%.2fGB"), disks_size/1024}'`
+DISK_PER=`df -m | grep "/dev/" | awk '{disks_t += $2} {disks_u += $3} END {printf ("%.2f"), 100*disks_u/disks_t}'`
+
+
 
 # Boot time
 LAST_BOOT=`who -b | sed 's/[a-z ]*//'`
@@ -53,7 +62,7 @@ virtual cores          :$VIRTUAL_CORES
 Total memory           :$TOTAL_RAM GB
 Used memory            :$USED_RAM GB (${USED_RAM_PERC}%)
 Disk usage             :$DISK_USE MB/$DISK_TOT MB($DISK_PER %)
-CPU load               :$CPU_USAGE_PERC %
+CPU load               :$CPU_USAGE_RATE %
 Last boot time         :$LAST_BOOT
 LVM in use             :$LVM_IN_USE
 TCP active connections :$ACTIVE_CONNECTIONS
