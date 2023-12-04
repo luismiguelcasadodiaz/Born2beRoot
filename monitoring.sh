@@ -62,7 +62,7 @@ virtual cores          :$VIRTUAL_CORES
 Total memory           :$TOTAL_RAM GB
 Used memory            :$USED_RAM GB (${USED_RAM_PERC}%)
 Disk usage             :$DISK_USE MB/$DISK_TOT MB($DISK_PER %)
-CPU load               :$CPU_USAGE_PERC %
+CPU load               :$CPU_USAGE_RATE %
 Last boot time         :$LAST_BOOT
 LVM in use             :$LVM_IN_USE
 TCP active connections :$ACTIVE_CONNECTIONS
