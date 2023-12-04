@@ -23,7 +23,7 @@ AVAI_RAM=`cat  /proc/meminfo | grep MemAvailable | sed 's/MemAvailable://' | sed
 CPU_USAGE_RATE=`cat /proc/stat | grep 'cpu ' | sed 's/cpu  //g' | awk  '{split($0,t," "); for(i=NF;i>0;i--) s = s + $i } END {printf ("%.2f"),(1 - ($4/s)) }'`
 
 # Disk usage
-DISK_TOT=`df -m | grep "/dev/" | awk '{disks_size += $2} END {printf ("%.2fGB"), disks_size}'`
+DISK_TOT=`df -m | grep "/dev/" | awk '{disks_size += $2} END {printf ("%.2fGB"), disks_size/1024}'`
 DISK_USE=`df -m | grep "/dev/" | awk '{disks_size += $3} END {print disks_size}'`
 DISK_PER=`df -m | grep "/dev/" | awk '{disks_t += $3} {disks_u += $3} END {printf (%d), 100*disks_u/disk_t}'`
 
