@@ -15,7 +15,8 @@ VIRTUAL_CORES=`grep "^processor" /proc/cpuinfo | sort | uniq | wc -l `
 TOTAL_RAM=`cat  /proc/meminfo | grep MemTotal | sed 's/MemTotal://' | sed 's/ //g' | sed 's/kB//'`
 AVAI_RAM=`cat  /proc/meminfo | grep MemAvailable | sed 's/MemAvailable://' | sed 's/ //g' | sed 's/kB//'`
 #USED_RAM=`bc <<< "scale=2; (${TOTAL_RAM} - ${AVAI_RAM}) / 1024 / 1024"`
-USED_RAM=$(expr (${TOTAL_RAM} - ${AVAI_RAM}) / 1024 / 1024)
+USED_RAM=$(expr ${TOTAL_RAM} - ${AVAI_RAM})
+USED_RAM=$(expr $USED_RAM / 1024 / 1024)
 #TOTAL_RAM=`bc <<< "scale=2; ${TOTAL_RAM} / 1024 / 1024"`
 TOTAL_RAM=$(printf "%4.2f (${TOTAL_RAM} / 1024 / 1024"))
 #USED_RAM_PERC=`bc <<< "scale=2; (${USED_RAM} / ${TOTAL_RAM}) * 100"`
