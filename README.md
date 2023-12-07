@@ -193,6 +193,8 @@ sed -i -e '/^#PasswordAuthentication/ a ChallengeResponseAuthentication yes' /et
 
 Add this line to `/etc/pam.d/sshd`
 
+During projec evaluation, you need to create a newuser. Manually add `nullok` after `pam_google_authenticator.so` to allow the new user connect  via ssh wihtout a 2fa.
+
 ```bash
 sed -i -e '/common-auth/a auth required pam_google_authenticator.so' /etc/pam.d/sshd
 ```
