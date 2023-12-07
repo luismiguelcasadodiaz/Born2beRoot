@@ -12,15 +12,12 @@ PHYSICAL_CORES=`grep "cpu cores" /proc/cpuinfo | uniq | sed 's/cpu cores *\t: //
 VIRTUAL_CORES=`grep "^processor" /proc/cpuinfo | sort | uniq | wc -l `
 
 # Memory usage
-TOTAL_RAM=`cat  /proc/meminfo | grep MemTotal | sed 's/MemTotal://' | sed 's/ //g' | sed 's/kB//'`
+TOTAL_RAM=$(free -m | awk '$1 == "Mem:" {print $2}')
 AVAI_RAM=`cat  /proc/meminfo | grep MemAvailable | sed 's/MemAvailable://' | sed 's/ //g' | sed 's/kB//'`
-#USED_RAM=`bc <<< "scale=2; (${TOTAL_RAM} - ${AVAI_RAM}) / 1024 / 1024"`
-USED_RAM=$(expr ${TOTAL_RAM} - ${AVAI_RAM})
+USED_RAM=$(free -m | awk '$1 == "Mem:" {print $2}')
+xpr $TOTAL_RAM - $AVAI_RAM)
 USED_RAM=$(expr $USED_RAM / 1024 / 1024)
-#TOTAL_RAM=`bc <<< "scale=2; ${TOTAL_RAM} / 1024 / 1024"`
 TOTAL_RAM=$(printf "%4.2f (${TOTAL_RAM} / 1024 / 1024"))
-#USED_RAM_PERC=`bc <<< "scale=2; (${USED_RAM} / ${TOTAL_RAM}) * 100"`
-#printf -v USED_RAM "%4.2f" $USED_RAM 
 
 # CPU usage 
 CPU_USAGE_RATE=`cat /proc/stat | grep 'cpu ' | sed 's/cpu  //g' | awk  '{split($0,t," "); for(i=NF;i>0;i--) s = s + $i } END {printf ("%.2f"),(1 - ($4/s)) }'`
