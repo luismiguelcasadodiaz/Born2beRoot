@@ -1,6 +1,5 @@
 #!/usr/bin/bash
 
-
 # Operating system
 KERNEL_RELEASE=`uname --kernel-release`
 KERNEL_VERSION=`uname --kernel-version`
@@ -13,15 +12,10 @@ PHYSICAL_CORES=`grep "cpu cores" /proc/cpuinfo | uniq | sed 's/cpu cores *\t: //
 VIRTUAL_CORES=`grep "^processor" /proc/cpuinfo | sort | uniq | wc -l `
 
 # Memory usage
-TOTAL_RAM=$(cat  /proc/meminfo | grep MemTotal | sed 's/MemTotal://' | sed 's/ //g' | sed 's/kB//')
-AVAI_RAM=`cat  /proc/meminfo | grep MemAvailable | sed 's/MemAvailable://' | sed 's/ //g' | sed 's/kB//'`
-USED_RAM=$(expr $TOTAL_RAM - $AVAI_RAM)
-TOTAL_RAM=$(expr $TOTAL_RAM / 1024)
-TOTAL_RAM_GB=$(printf "%.2f" $TOTAL_RAM / 1024)
-
-USED_RAM=$(expr $USED_RAM /1024) 
-USED_RAM_GB$(printf "%.2f" $USED_RAM / 1024) 
-USED_RAM_PERC=$(`bc <<< "scale=2; $USED_RAM / $TOTAL_RAM"`)
+TOTAL_RAM_GB=$(cat /proc/meminfo | awk '$1 == "MemTotal:" {printf("%2.f"),  $2/1024/1024}')
+USED_RAM_GB=$(cat /proc/meminfo | awk '$1 == "MemFree:" {printf("%2.f"),  $2/1024/1024}')
+#USED_RAM=$(free -m | awk '$1 == "Mem:" {print $3}')
+#USED_RAM_PERC=$(free | awk '$1 == "Mem:" {printf("%.2f"), $3/$2*100}')
 
 #CPU USAGE
 CPU_USAGE_RATE=$(cat /proc/stat | grep 'cpu ' | sed 's/cpu  //g' | awk  '{split($0,t," "); for(i=NF;i>0;i--) s = s + $i } END {printf ("%.2f"),(1 - ($4/s)) }')
@@ -63,8 +57,8 @@ Operating system       :$OPERATING_SYSTEM
 CPUS                   :$CPUS
 Physical cores         :$PHYSICAL_CORES
 virtual cores          :$VIRTUAL_CORES
-Total memory           :$TOTAL_RAM GB $TOTAL_RAM_GB
-Used memory            :$USED_RAM GB $USED_RAM_GB (${USED_RAM_PERC}%)
+Total memory           :$TOTAL_RAM MB
+Used memory            :$USED_RAM MB  (${USED_RAM_PERC}%)
 Disk usage             :$DISK_USE MB/$DISK_TOT MB($DISK_PER %)
 CPU load               :$CPU_USAGE_RATE %
 Last boot time         :$LAST_BOOT

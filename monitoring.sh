@@ -13,6 +13,11 @@ VIRTUAL_CORES=`grep "^processor" /proc/cpuinfo | sort | uniq | wc -l `
 
 # Memory usage
 TOTAL_RAM=$(free -m | awk '$1 == "Mem:" {print $2}')
+USED_RAM=$(free -m | awk '$1 == "Mem:" {print $3}')
+USED_RAM_PERC=$(free | awk '$1 == "Mem:" {printf("%.2f"), $3/$2*100}')
+
+
+TOTAL_RAM=$(free -m | awk '$1 == "Mem:" {print $2}')
 AVAI_RAM=`cat  /proc/meminfo | grep MemAvailable | sed 's/MemAvailable://' | sed 's/ //g' | sed 's/kB//'`
 USED_RAM=$(free -m | awk '$1 == "Mem:" {print $2}')
 xpr $TOTAL_RAM - $AVAI_RAM)
@@ -57,8 +62,8 @@ Operating system       :$OPERATING_SYSTEM
 CPUS                   :$CPUS
 Physical cores         :$PHYSICAL_CORES
 virtual cores          :$VIRTUAL_CORES
-Total memory           :$TOTAL_RAM GB
-Used memory            :$USED_RAM GB (${USED_RAM_PERC}%)
+Total memory           :$TOTAL_RAM MB
+Used memory            :$USED_RAM MB (${USED_RAM_PERC}%)
 Disk usage             :$DISK_USE MB/$DISK_TOT MB($DISK_PER %)
 CPU load               :$CPU_USAGE_RATE %
 Last boot time         :$LAST_BOOT
