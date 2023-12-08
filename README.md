@@ -509,6 +509,10 @@ Copy pasted from our intranet
 
 [memory usage](https://www.cyberciti.biz/faq/linux-check-memory-usage/)
 
+[message of the day](https://www.networkworld.com/article/964193/how-to-use-the-motd-file-to-get-linux-users-to-pay-attention.html)
+
+[password hardning](https://www.zonasystem.com/2020/04/gestion-de-las-politicas-de-contrasenas-en-linux-logindefs-pam-pwquality-cracklib.html)
+
 #### to refresh my memory
 
 ##### apt
