@@ -41,6 +41,7 @@ sed -i -e '/pam_pwquality.so/ s/retry=3/retry=3 maxrepeat=3 /' /etc/pam.d/common
 sed -i -e '/pam_pwquality.so/ s/retry=3/retry=3 dcredit=-1 /' /etc/pam.d/common-password
 sed -i -e '/pam_pwquality.so/ s/retry=3/retry=3 lcredit=-1 /' /etc/pam.d/common-password
 sed -i -e '/pam_pwquality.so/ s/retry=3/retry=3 ucredit=-1 /' /etc/pam.d/common-password
+sed -i -e '/pam_pwquality.so/ s/retry=3/retry=3 minlen=10/' /etc/pam.d/common-password
 
 # set up firewall rules.
 ufw deny 22

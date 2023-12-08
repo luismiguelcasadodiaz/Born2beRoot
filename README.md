@@ -140,7 +140,7 @@ For security reasons, it must not be possible to connect using SSH as root.
 sed -i -e '/#PermitRootLogin/ s/#PermitRootLogin prohibit-password/PermitRootLogin no/' /etc/ssh/sshd_config
 ```
 
-Either it is not required by the subject i added this restriction to allow only one user to connect through SSH
+Either it is not required by the subject i added this restriction to allow only one user to connect through SSH. That is a challenge at evaluation time when new created user has to log in. Manually you will have to change `AllowUsers luicasad` by `AllowUsers luicasad thenewuserlogin` . DO NOT SEPARATE LOGINS WITH COMMAS BUT WHITESPACES.
 
 ```bash
 sed -i -e '/^PermitRootLogin no/a AllowUsers luicasad' /etc/ssh/sshd_config
