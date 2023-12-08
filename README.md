@@ -79,16 +79,36 @@ apt install bc
 ```
 
 ## bonus installation
+Inside my script `instal.sh` there are all commands to install bonus required packages.
 
-### wget nzip nginx 
+1.- a webserver `lighttpd`.
+2.- a data base `mariadb`.
+3.- a FRONT-END scripting languaje `php` with a bunch of modules.
+4.- a content management environment `wordpress`.
+5.- a ftp server `vsftpd`.
 
-### php php-curl php-fpm php-bcmath php-gd php-soap php-zip php-mbstring php-mysqlnd php-xml php-intl
-
-### mariadb-server mariadb-client
-
-### wordpress wget https://wordpress.org/latest.zip
-
-### ftp server
+```bash
+apt install -y wget
+apt install -y unzip
+apt install -y lighttpd
+apt install -y php
+apt install -y php-curl
+apt install -y php-fpm
+apt install -y php-bcmath
+apt install -y php-gd
+apt install -y php-soap
+apt install -y php-zip
+apt install -y php-mbstring
+apt install -y php-mysqlnd
+apt install -y php-cgi
+apt install -y php-mysql
+apt install -y php-xml
+apt install -y php-intl
+apt install -y mariadb-server
+apt install -y mariadb-client
+wget https://wordpress.org/latest.zip
+apt install -y vsftpd
+```
 
 <img width="595" alt="image" src="https://github.com/luismiguelcasadodiaz/Born2beRoot/assets/19540140/f3f5a8a2-f758-4e4f-8885-7177b4a6d118">
 
@@ -283,6 +303,7 @@ sed -i -e '/pam_pwquality.so/ s/retry=3/retry=3 maxrepeat=3 /' /etc/pam.d/common
 sed -i -e '/pam_pwquality.so/ s/retry=3/retry=3 dcredit=-1 /' /etc/pam.d/common-password
 sed -i -e '/pam_pwquality.so/ s/retry=3/retry=3 lcredit=-1 /' /etc/pam.d/common-password
 sed -i -e '/pam_pwquality.so/ s/retry=3/retry=3 ucredit=-1 /' /etc/pam.d/common-password
+sed -i -e  '/pam_pwquality.so/ s/retry=3/retry=3 minlen=10/' /etc/pam.d/common-password
 ```
 
 --- 
@@ -512,6 +533,10 @@ Copy pasted from our intranet
 [message of the day](https://www.networkworld.com/article/964193/how-to-use-the-motd-file-to-get-linux-users-to-pay-attention.html)
 
 [password hardning](https://www.zonasystem.com/2020/04/gestion-de-las-politicas-de-contrasenas-en-linux-logindefs-pam-pwquality-cracklib.html)
+
+[ssh connectiviy issues](https://docs.digitalocean.com/support/how-to-troubleshoot-ssh-connectivity-issues/)
+
+[vsftpd](https://hostadvice.com/how-to/web-hosting/ubuntu/how-to-install-and-configure-vsftpd-on-ubuntu-18-04/)
 
 #### to refresh my memory
 
