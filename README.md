@@ -9,6 +9,11 @@ mkdir /sgoinfre/Perso/yourusername
 ```
 Then use this path to save the image of your virtual machine (VM).
 
+Please consider that with 5 GB it is enough for this project including bonus. In my case 3.3GB was enough.
+
+<img width="673" alt="image" src="https://github.com/luismiguelcasadodiaz/Born2beRoot/assets/19540140/e4470b72-9111-4b1d-ae21-571481019e6c">
+
+
 ## Virtual box network configuration 
 
 An important decision for this project is about virtual machine connectivity. Virtualbox offers several options.
@@ -511,17 +516,36 @@ SUDO_COMMANDS=`sudo journalctl  /usr/bin/sudo | grep COMMAND | wc -l`
 ### Bonus configuration
 
 #### 1.- a webserver `lighttpd`.
+
 #### 2.- a data base `mariadb`.
+
 #### 3.- a FRONT-END scripting languaje `php` with a bunch of modules.
+
 #### 4.- a content management environment `wordpress`.
+
 #### Config ftp server `vsftpd`.
 To show this functionality i will allow a `guest` connection to vsftpd server service.
 
     1.- Create a directory for downloading files `mkdir -p /var/ftp/tothom` . The flag `-p` allows to create the path of intermediate directories if they do not exists.
-    2.- Assign `nobody:nogroup` permission to download directory `chown nobody:nogroup /var/ftp/tothom` 
+    
+    2.- Assign `nobody:nogroup` permission to download directory `chown nobody:nogroup /var/ftp/tothom`.
     These are special users and groups that are used to provide the most restrictive access permissions possible. The **nobody** user is a system account that does not have any shell access. It is typically used to run system services and daemons that do not require user interaction. The **nogroup** group is a group that does not have any members. It is typically used to group together system files and folders that should not be accessible to any users or groups.The reason for assigning the permissions "nobody:nogroup" to a folder is to make it as secure as possible. This is because the nobody user and the nogroup group have the least amount of privileges on the system. This means that only authorized users with special privileges will be able to access or modify the folder's contents.
+    
     3.- Copy some files to the download directory.
-    4.- Edit `/etc/vsftpd.config` and instruct the service to allow anonymous connection from guest users. Change `anonymous_enable=NO` by `anonymous_enable=YES. Avoid locar users to connect to this service changing `local_enable=YES` by `local_enable=NO`. Inform the server about `anon_root=/var/ftp/tothom`
+    
+    4.- Edit `/etc/vsftpd.config` and instruct the service to allow anonymous connection from guest users. Change `anonymous_enable=NO` by `anonymous_enable=YES. Avoid locar users to connect to this service changing `local_enable=YES` by `local_enable=NO`. Inform the server about which is the download directory `anon_root=/var/ftp/tothom`.
+
+####### Conexion wiht Safari
+<img width="669" alt="image" src="https://github.com/luismiguelcasadodiaz/Born2beRoot/assets/19540140/dfc687fc-9a53-437d-a388-97e33cb90ab6">
+
+####### Login as guest/Anonymous
+
+<img width="431" alt="image" src="https://github.com/luismiguelcasadodiaz/Born2beRoot/assets/19540140/d2736599-e11d-4572-9ea7-1d19221ef75e">
+
+####### Finder visualization of `tothom` download directory
+<img width="769" alt="image" src="https://github.com/luismiguelcasadodiaz/Born2beRoot/assets/19540140/73485346-bd6b-4f15-8a3b-d63b0f5a6e3b">
+
+
 
 
 ---
@@ -551,6 +575,8 @@ Copy pasted from our intranet
 [ssh connectiviy issues](https://docs.digitalocean.com/support/how-to-troubleshoot-ssh-connectivity-issues/)
 
 [vsftpd](https://hostadvice.com/how-to/web-hosting/ubuntu/how-to-install-and-configure-vsftpd-on-ubuntu-18-04/)
+
+[vsftpd](https://www.digitalocean.com/community/tutorials/how-to-set-up-vsftpd-for-anonymous-downloads-on-ubuntu-16-04)
 
 #### to refresh my memory
 
