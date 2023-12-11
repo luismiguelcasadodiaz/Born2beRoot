@@ -510,7 +510,21 @@ SUDO_COMMANDS=`sudo journalctl  /usr/bin/sudo | grep COMMAND | wc -l`
 
 ### Bonus configuration
 
+#### 1.- a webserver `lighttpd`.
+#### 2.- a data base `mariadb`.
+#### 3.- a FRONT-END scripting languaje `php` with a bunch of modules.
+#### 4.- a content management environment `wordpress`.
+#### Config ftp server `vsftpd`.
+To show this functionality i will allow a `guest` connection to vsftpd server service.
 
+    1.- Create a directory for downloading files `mkdir -p /var/ftp/tothom` . The flag `-p` allows to create the path of intermediate directories if they do not exists.
+    2.- Assign `nobody:nogroup` permission to download directory `chown nobody:nogroup /var/ftp/tothom` 
+    These are special users and groups that are used to provide the most restrictive access permissions possible. The **nobody** user is a system account that does not have any shell access. It is typically used to run system services and daemons that do not require user interaction. The **nogroup** group is a group that does not have any members. It is typically used to group together system files and folders that should not be accessible to any users or groups.The reason for assigning the permissions "nobody:nogroup" to a folder is to make it as secure as possible. This is because the nobody user and the nogroup group have the least amount of privileges on the system. This means that only authorized users with special privileges will be able to access or modify the folder's contents.
+    3.- Copy some files to the download directory.
+    4.- Edit `/etc/vsftpd.config` and instruct the service to allow anonymous connection from guest users. Change `anonymous_enable=NO` by `anonymous_enable=YES. Avoid locar users to connect to this service changing `local_enable=YES` by `local_enable=NO`. Inform the server about `anon_root=/var/ftp/tothom`
+
+
+---
 ## Sgoinfre usage conditions
 
 Copy pasted from our intranet
