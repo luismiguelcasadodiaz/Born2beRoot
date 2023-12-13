@@ -225,9 +225,6 @@ sed -i -e '/common-auth/a auth required pam_google_authenticator.so' /etc/pam.d/
 ```
 
 
-Create groups user42
-adduser luicasad sudo    //logout and login
-
 ---
 
 ##### passwords policy
@@ -578,6 +575,10 @@ Copy pasted from our intranet
 
 [vsftpd](https://www.digitalocean.com/community/tutorials/how-to-set-up-vsftpd-for-anonymous-downloads-on-ubuntu-16-04)
 
+[apt vs aptitude](https://www.tecmint.com/difference-between-apt-and-aptitude/)
+
+[Rocky vs Debian](https://amadla.medium.com/debian-linux-vs-rocky-os-exploring-the-best-choice-for-your-server-dfd6b3d80c1a)
+
 #### to refresh my memory
 
 ##### apt
@@ -639,7 +640,9 @@ Add positive rule
 ```bash
 ufw allow 4242
 ```
-
+remove
+Create groups user42
+adduser luicasad sudo    //logout and login
 
 https://www.linuxtuto.com/how-to-install-wordpress-on-debian-12/
 
