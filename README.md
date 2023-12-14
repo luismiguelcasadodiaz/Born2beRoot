@@ -543,12 +543,12 @@ To show this functionality i will allow a `guest` connection to vsftpd server se
 <img width="769" alt="image" src="https://github.com/luismiguelcasadodiaz/Born2beRoot/assets/19540140/73485346-bd6b-4f15-8a3b-d63b0f5a6e3b">
 
 ---
-### What i learnt from Alex, Abel and Martí
+### What i Learnt from Alex (ade-tole) , Abel(abluis-m) and Martí(mpuig-ma).
 
 ##### signature verification
 
-The `-c` flag in `shasum' command to check signature file like this `362eeadd85368b4f4dcfd7480b574fa37a8b0650  luicasad42.vdi` when executed in the file's folder will show
-either 
+The `-c` flag in `shasum` command to check a signature file like this `362eeadd85368b4f4dcfd7480b574fa37a8b0650  luicasad42.vdi`,  when executed in the file's folder will show
+either:
 
 ```bash
 luicasad42.vdi: OK`
@@ -559,10 +559,20 @@ luicasad42.vdi: OK`
 luicasad42.vdi: FAILED
 shasum: WARNING: 1 computed checksum did NOT match
 ```
-##### partitions and numbers
-Why you get `sda3` and the subject shows `sda5`? In the subject, there is an extended partion.  The traditional DOS MBR partition table supports up to four primary partitions and an unlimited number of logical partitions within an extended partition. So sda1 .. sda4 are primary partition. When you have a number higher than 4 you can infer any of the previous partitio was extended. However, the GPT partition table, which is more modern, supports a larger number of partitions. In GPT, the theoretical maximum number of partitions is 128, of which up to 32 can be primary partitions, while the rest must be logical partitions within an extended partition.By legacy, only four primapartitions were available. when more than for required, the last one was an extended partition [lsblk outpu comments](https://unix.stackexchange.com/questions/659652/meaning-of-the-output-from-lsblk-command)
 
-##### Logged users is not the same that runing sessions
+##### partitions and numbers
+Why you get `sda3` and the subject shows `sda5`? 
+
+In the subject, there is an extended partion.  
+
+The traditional DOS MBR partition table supports up to four primary partitions and an unlimited number of logical partitions within an extended partition. So sda1 .. sda4 are primary partitions. When you have a number higher than 4 you can infer any of the previous partitions was extended. 
+
+However, the GPT partition table, which is more modern, supports a larger number of partitions. In GPT, the theoretical maximum number of partitions is 128, of which up to 32 can be primary partitions, while the rest must be logical partitions within an extended partition. 
+
+[lsblk output comments](https://unix.stackexchange.com/questions/659652/meaning-of-the-output-from-lsblk-command) 
+[parittion table visualization](https://recoverit.wondershare.com/partition-tips/linux-list-partitions.html)
+
+##### Logged users is not the same that runing sessions.
 Let's create this scenario: Root is logged in the main console and one user has two ssh conections:
 
 `who` output is
@@ -589,6 +599,46 @@ If you prefer `users` command, instead of `users | wc -w` is better `users | awk
 
 if you prefer `who` commnad,  instead of `who | wc -l` is better `who  | awk '{print $1}' | uniq | wc -l`.
 
+##### sudoreplay
+
+
+##### Shebang/hashbang and crontab
+my crontab line for executing monitoring script was:
+
+```bash
+*/10 * * * * sh /root/Born2beRoot/monitoring.sh >/dev/null 2>&1
+```
+
+and at the same time `monitoring.sh` file had this shebang `#!/usr/bin/bash
+`
+My intention was to use **bash** commands to monitor the system, but i was using **sh**ell to execute it.
+
+Let's look carefully at the details of these commands:
+
+```bash
+root@luicasad42:~# which bash
+/usr/bin/bash
+root@luicasad42:~# which sh
+/usr/bin/sh
+root@luicasad42:~# which dash
+/usr/bin/dash
+root@luicasad42:~# cd /usr/bin
+root@luicasad42:/usr/bin# ls -hal bash
+-rwxr-xr-x 1 root root 1,3M abr 23  2023 bash
+root@luicasad42:/usr/bin# ls -hal sh
+lrwxrwxrwx 1 root root 4 ene  5  2023 sh -> dash
+root@luicasad42:/usr/bin# ls -hal dash
+-rwxr-xr-x 1 root root 123K ene  5  2023 dash
+root@luicasad42:/usr/bin# 
+```
+OMG!!! I was instructing cron to execute a script that uses bash commands with dash. I notice that bash is 10 times bigger than dash. 
+Now I start to understand, perhaps, the reason why cron was not executing  correctly and i spend 3 days changing my bash commands. 
+
+I gave execution permission to monitoring and changed crontab line to 
+
+```bash
+*/10 * * * * /root/Born2beRoot/monitoring.sh >/dev/null 2>&1
+```
 
 ---
 ## Sgoinfre usage conditions
@@ -628,7 +678,7 @@ Copy pasted from our intranet
 
 ##### apt
 Install a specific package
-
+i awk '{}'
 ```bash
 apt install [package-name] 
 ```
