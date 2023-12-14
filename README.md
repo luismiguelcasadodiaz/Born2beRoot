@@ -542,7 +542,52 @@ To show this functionality i will allow a `guest` connection to vsftpd server se
 ####### Finder visualization of `tothom` download directory
 <img width="769" alt="image" src="https://github.com/luismiguelcasadodiaz/Born2beRoot/assets/19540140/73485346-bd6b-4f15-8a3b-d63b0f5a6e3b">
 
+---
+### What i learnt from Alex, Abel and Martí
 
+##### signature verification
+
+The `-c` flag in `shasum' command to check signature file like this `362eeadd85368b4f4dcfd7480b574fa37a8b0650  luicasad42.vdi` when executed in the file's folder will show
+either 
+
+```bash
+luicasad42.vdi: OK`
+```
+ or
+ 
+```bash
+luicasad42.vdi: FAILED
+shasum: WARNING: 1 computed checksum did NOT match
+```
+##### partitions and numbers
+Why you get `sda3` and the subject shows `sda5`? In the subject, there is an extended partion.  The traditional DOS MBR partition table supports up to four primary partitions and an unlimited number of logical partitions within an extended partition. So sda1 .. sda4 are primary partition. When you have a number higher than 4 you can infer any of the previous partitio was extended. However, the GPT partition table, which is more modern, supports a larger number of partitions. In GPT, the theoretical maximum number of partitions is 128, of which up to 32 can be primary partitions, while the rest must be logical partitions within an extended partition.By legacy, only four primapartitions were available. when more than for required, the last one was an extended partition [lsblk outpu comments](https://unix.stackexchange.com/questions/659652/meaning-of-the-output-from-lsblk-command)
+
+##### Logged users is not the same that runing sessions
+Let's create this scenario: Root is logged in the main console and one user has two ssh conections:
+
+`who` output is
+
+```bash
+luicasad@luicasad42:~$ who -H
+NOMBRE   LÍNEA       TIEMPO           COMENTARIO
+root     tty1         2023-12-14 10:14
+luicasad pts/0        2023-12-14 10:17 (192.168.0.99)
+luicasad pts/1        2023-12-14 10:18 (192.168.0.99)
+
+
+```
+`users` output is:
+
+```bash
+luicasad@luicasad42:~$ users
+luicasad luicasad root
+```
+
+The subjec request **The number of users using the server**
+
+If you prefer `users` command, instead of `users | wc -w` is better `users | awk '{for(i=NF;i >0;i--) print $i}' | uniq | wc -l` .
+
+if you prefer `who` commnad,  instead of `who | wc -l` is better `who  | awk '{print $1}' | uniq | wc -l`.
 
 
 ---
