@@ -543,9 +543,10 @@ To show this functionality i will allow a `guest` connection to vsftpd server se
 <img width="769" alt="image" src="https://github.com/luismiguelcasadodiaz/Born2beRoot/assets/19540140/73485346-bd6b-4f15-8a3b-d63b0f5a6e3b">
 
 ---
-### What i Learnt from Alex (ade-tole) , Abel(abluis-m) and Martí(mpuig-ma).
+### What i learnt
+#### from Alex (ade-tole) , Abel(abluis-m) and Martí(mpuig-ma) at evaluation time.
 
-##### signature verification
+##### Signature verification
 
 The `-c` flag in `shasum` command to check a signature file like this `362eeadd85368b4f4dcfd7480b574fa37a8b0650  luicasad42.vdi`,  when executed in the file's folder will show
 either:
@@ -560,7 +561,7 @@ luicasad42.vdi: FAILED
 shasum: WARNING: 1 computed checksum did NOT match
 ```
 
-##### partitions and numbers
+##### Partitions and numbers
 Why you get `sda3` and the subject shows `sda5`? 
 
 In the subject, there is an extended partion.  
@@ -600,7 +601,7 @@ If you prefer `users` command, instead of `users | wc -w` is better `users | awk
 
 if you prefer `who` commnad,  instead of `who | wc -l` is better `who  | awk '{print $1}' | uniq | wc -l`.
 
-##### sudoreplay
+##### Sudoreplay
 To replay sudo session logs. 
 
 The subject request us  "Each action using sudo has to be **archived, both inputs and outputs**. The log file
@@ -677,11 +678,11 @@ I gave execution permission to monitoring and changed crontab line to
 ```bash
 */10 * * * * /root/Born2beRoot/monitoring.sh >/dev/null 2>&1
 ```
-##### locale warning when ssh connection
+##### A locale warning when ssh connection.
 Inside /etc/ssh/sshd_config there is a directive ` AcceptEnv LANG LC_*` allowing client's terminals to pass therir local environment variables to the server.
 The iterm2 in my Mac had not locale configuration. the ssh server warned me about it.
 
-##### chage, changes user password expiry information.
+##### Change user password expiry information with `chage`.
 
 During debian installation o created two users: root and luicasad.
 
