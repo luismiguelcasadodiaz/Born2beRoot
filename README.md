@@ -613,9 +613,8 @@ and at the same time `monitoring.sh` file had this shebang `#!/usr/bin/bash
 `
 My intention was to use **bash** commands to monitor the system, but i was using **sh**ell to execute it.
 
->[!NOTE]
-
-Let's look carefully at the details of these commands:
+> [!NOTE]
+> Let's look carefully at the details of these commands:
 
 ```bash
 root@luicasad42:~# which bash
