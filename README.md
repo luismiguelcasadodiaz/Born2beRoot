@@ -218,7 +218,7 @@ sed -i -e '/^#PasswordAuthentication/ a ChallengeResponseAuthentication yes' /et
 
 Add this line to `/etc/pam.d/sshd`
 
-During projec evaluation, you need to create a newuser. Manually add `nullok` after `pam_google_authenticator.so` to allow the new user connect  via ssh wihtout a 2fa.
+During projec evaluation, you need to create a newuser. Manually add `nullok` after `pam_google_authenticator.so` to allow the new user connect  via ssh without a 2fa.
 
 ```bash
 sed -i -e '/common-auth/a auth required pam_google_authenticator.so' /etc/pam.d/sshd
@@ -532,7 +532,7 @@ To show this functionality i will allow a `guest` connection to vsftpd server se
     
     4.- Edit `/etc/vsftpd.config` and instruct the service to allow anonymous connection from guest users. Change `anonymous_enable=NO` by `anonymous_enable=YES. Avoid locar users to connect to this service changing `local_enable=YES` by `local_enable=NO`. Inform the server about which is the download directory `anon_root=/var/ftp/tothom`.
 
-####### Conexion wiht Safari
+####### Conexion with Safari
 <img width="669" alt="image" src="https://github.com/luismiguelcasadodiaz/Born2beRoot/assets/19540140/dfc687fc-9a53-437d-a388-97e33cb90ab6">
 
 ####### Login as guest/Anonymous
@@ -687,7 +687,7 @@ During debian installation o created two users: root and luicasad.
 
 After hardening password policy i changed both users passwords with `password`to fullfill new rules settled inside /etc/pam.d/common-password.
 
-Then created a newuser with  `adduser`. Checking it wiht `chage`, i got:
+Then created a newuser with  `adduser`. Checking it with `chage`, i got:
 ```bash
 luicasad@luicasad42:~$ sudo chage -l newuser
 Último cambio de contraseña					:dic 14, 2023
@@ -719,12 +719,17 @@ luicasad@luicasad42:~$
 Facing incorreclty a subject that requested us
 
 1.-Your password has to expire every 30 days.
+
 2.-The minimum number of days allowed before the modification of a password will be set to 2.
+
 3.-The user has to receive a warning message 7 days before their password expires.
 
-I learnt that : The `password` command do not takes information from `/etc/login.defs` as it does `adduser`
 
-The command `chage -m 2 -M 30 luicasad` solved my problem
+> [!NOTE]
+> I learnt that : The `password` command do not takes information from `/etc/login.defs` as it does `adduser`
+
+> [!IMPORTANT]
+> The command `chage -m 2 -M 30 luicasad` solved my problem
 
 ```bash
 luicasad@luicasad42:~$ sudo chage -l luicasad
