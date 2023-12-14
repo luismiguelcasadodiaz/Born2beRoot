@@ -140,10 +140,14 @@ apt-get install git
 
 You have to configure your operating system with the UFW (or Firewalla for Rocky) firewall and thus leave only port 4242 open. 
 I also set up a restriction to avoid connections on port 22.
+thinking about bonus part i also alloe 80 for the web server and 20 and 21 fotr ftp server
 
 ```bash
 ufw deny 22
 ufw allow 4242
+ufw allow 80
+ifw allow ftp
+ufw allow ftp-data
 ```
 
 ---
@@ -514,13 +518,18 @@ SUDO_COMMANDS=`sudo journalctl  /usr/bin/sudo | grep COMMAND | wc -l`
 
 #### 1.- a webserver `lighttpd`.
 
+I already openned port 80 at firewall configuration
+
 #### 2.- a data base `mariadb`.
 
 #### 3.- a FRONT-END scripting languaje `php` with a bunch of modules.
 
 #### 4.- a content management environment `wordpress`.
 
+Unzip wordpress package in `/var/www/`. Rename `html` folder to `html_old`, rename `wordpress` folder as `html` and set recursively to `html` 755 permisions.
+
 #### Config ftp server `vsftpd`.
+
 To show this functionality i will allow a `guest` connection to vsftpd server service.
 
     1.- Create a directory for downloading files `mkdir -p /var/ftp/tothom` . The flag `-p` allows to create the path of intermediate directories if they do not exists.
@@ -530,9 +539,10 @@ To show this functionality i will allow a `guest` connection to vsftpd server se
     
     3.- Copy some files to the download directory.
     
-    4.- Edit `/etc/vsftpd.config` and instruct the service to allow anonymous connection from guest users. Change `anonymous_enable=NO` by `anonymous_enable=YES. Avoid locar users to connect to this service changing `local_enable=YES` by `local_enable=NO`. Inform the server about which is the download directory `anon_root=/var/ftp/tothom`.
+    4.- Edit `/etc/vsftpd.config` and instruct the service to allow anonymous connection from guest users. Change `anonymous_enable=NO` by `anonymous_enable=YES. Avoid local users to connect to this service changing `local_enable=YES` by `local_enable=NO`. Inform the server about which is the download directory `anon_root=/var/ftp/tothom`.
 
 ####### Conexion with Safari
+
 <img width="669" alt="image" src="https://github.com/luismiguelcasadodiaz/Born2beRoot/assets/19540140/dfc687fc-9a53-437d-a388-97e33cb90ab6">
 
 ####### Login as guest/Anonymous
@@ -540,6 +550,7 @@ To show this functionality i will allow a `guest` connection to vsftpd server se
 <img width="431" alt="image" src="https://github.com/luismiguelcasadodiaz/Born2beRoot/assets/19540140/d2736599-e11d-4572-9ea7-1d19221ef75e">
 
 ####### Finder visualization of `tothom` download directory
+
 <img width="769" alt="image" src="https://github.com/luismiguelcasadodiaz/Born2beRoot/assets/19540140/73485346-bd6b-4f15-8a3b-d63b0f5a6e3b">
 
 ---
