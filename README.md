@@ -758,7 +758,7 @@ Número de días de aviso antes de que caduque la contraseña	: 7
 luicasad@luicasad42:~$
 ```
 
-
+[back to top](#Born2beRoot)
 
 ---
 ## Sgoinfre usage conditions
