@@ -593,17 +593,54 @@ luicasad@luicasad42:~$ users
 luicasad luicasad root
 ```
 
-The subjec request **The number of users using the server**
+> [!IMPORTANT]
+> The subjec request **The number of users using the server**
 
 If you prefer `users` command, instead of `users | wc -w` is better `users | awk '{for(i=NF;i >0;i--) print $i}' | uniq | wc -l` .
 
 if you prefer `who` commnad,  instead of `who | wc -l` is better `who  | awk '{print $1}' | uniq | wc -l`.
 
 ##### sudoreplay
+To replay sudo session logs. 
+
+The subject request us  "Each action using sudo has to be **archived, both inputs and outputs**. The log file
+has to be saved in the /var/log/sudo/ folder." 
+
+Do you wonder what is this usefull for?
+
+To check if a privileged user has goodwill we can use this command:
+
+```bash
+sudoreplay -d /var/log/sudo -l user luicasad
+dic 14 12:24:56 2023 : luicasad : HOST=luicasad42 ; TTY=pts/0 ; CWD=/home/luicasad/Born2beRoot ; USER=root ; TSID=000004 ; COMMAND=/usr/bin/cat /var/spool/cron/crontabs/root
+dic 14 12:37:17 2023 : luicasad : HOST=luicasad42 ; TTY=pts/1 ; CWD=/home/luicasad ; USER=root ; TSID=000005 ; COMMAND=/usr/bin/mkdir /root/pulling_leg
+dic 14 12:37:58 2023 : luicasad : HOST=luicasad42 ; TTY=pts/1 ; CWD=/home/luicasad ; USER=root ; TSID=000006 ; COMMAND=/usr/bin/touch /root/pulling_leg/goodmornign.txt
+dic 14 12:39:20 2023 : luicasad : HOST=luicasad42 ; TTY=pts/1 ; CWD=/home/luicasad ; USER=root ; TSID=000007 ; COMMAND=/usr/bin/cp Born2beRoot/install.sh /root/pulling_leg
+dic 14 12:39:53 2023 : luicasad : HOST=luicasad42 ; TTY=pts/1 ; CWD=/home/luicasad ; USER=root ; TSID=000008 ; COMMAND=/usr/bin/cat /root/pulling_leg/install.sh
+dic 14 13:03:43 2023 : luicasad : HOST=luicasad42 ; TTY=pts/1 ; CWD=/home/luicasad ; USER=root ; TSID=000009 ; COMMAND=/root/Born2beRoot/config.sh
+```
+To replay command and see what the user saw, at the speed he saw it, we can use this command
+
+```bash
+root@luicasad42:~# sudoreplay -d /var/log/sudo 000009
+Replaying sudo session: /root/Born2beRoot/config.sh
+mkdir: no se puede crear el directorio «/var/log/sudo»: El fichero ya existe
+Skipping adding existing rule
+Skipping adding existing rule (v6)
+Skipping adding existing rule
+Skipping adding existing rule (v6)
+addgroup: El grupo `user42' ya existe.
+adduser: El usuario `luicasad' ya es un miembro de `user42'.
+adduser: El usuario `luicasad' ya es un miembro de `sudo'.
+sudo:x:27:luicasad
+user42:x:1001:luicasad
+Replay finished, press any key to restore the terminal.
+root@luicasad42:~# 
+```
 
 
 ##### Shebang/hashbang and crontab
-my crontab line for executing monitoring script was:
+My crontab line for executing monitoring script was:
 
 ```bash
 */10 * * * * sh /root/Born2beRoot/monitoring.sh >/dev/null 2>&1
@@ -640,6 +677,68 @@ I gave execution permission to monitoring and changed crontab line to
 ```bash
 */10 * * * * /root/Born2beRoot/monitoring.sh >/dev/null 2>&1
 ```
+##### locale warning when ssh connection
+Inside /etc/ssh/sshd_config there is a directive ` AcceptEnv LANG LC_*` allowing client's terminals to pass therir local environment variables to the server.
+The iterm2 in my Mac had not locale configuration. the ssh server warned me about it.
+
+##### chage, changes user password expiry information.
+
+During debian installation o created two users: root and luicasad.
+
+After hardening password policy i changed both users passwords with `password`to fullfill new rules settled inside /etc/pam.d/common-password.
+
+Then created a newuser with  `adduser`. Checking it wiht `chage`, i got:
+```bash
+luicasad@luicasad42:~$ sudo chage -l newuser
+Último cambio de contraseña					:dic 14, 2023
+La contraseña caduca					: ene 13, 2024
+Contraseña inactiva					: nunca
+La cuenta caduca						: nunca
+Número de días mínimo entre cambio de contraseña		: 2
+Número de días máximo entre cambio de contraseña		: 30
+Número de días de aviso antes de que caduque la contraseña	: 7
+luicasad@luicasad42:~$ 
+```
+I thought every thing was ok, **but it was not**. Again abluis-m openned my eyes.
+
+
+I went to my evaluation with these conditions for users created at debian installation:
+
+```bash
+luicasad@luicasad42:~$ sudo chage -l luicasad
+Último cambio de contraseña					:nov 10, 2023
+La contraseña caduca					: nunca
+Contraseña inactiva					: nunca
+La cuenta caduca						: nunca
+Número de días mínimo entre cambio de contraseña		: 0
+Número de días máximo entre cambio de contraseña		: 99999
+Número de días de aviso antes de que caduque la contraseña	: 7
+luicasad@luicasad42:~$ 
+```
+
+Facing incorreclty a subject that requested us
+
+1.-Your password has to expire every 30 days.
+2.-The minimum number of days allowed before the modification of a password will be set to 2.
+3.-The user has to receive a warning message 7 days before their password expires.
+
+I learnt that : The `password` command do not takes information from `/etc/login.defs` as it does `adduser`
+
+The command `chage -m 2 -M 30 luicasad` solved my problem
+
+```bash
+luicasad@luicasad42:~$ sudo chage -l luicasad
+Último cambio de contraseña					:dic 14, 2023
+La contraseña caduca					: ene 13, 2024
+Contraseña inactiva					: nunca
+La cuenta caduca						: nunca
+Número de días mínimo entre cambio de contraseña		: 2
+Número de días máximo entre cambio de contraseña		: 30
+Número de días de aviso antes de que caduque la contraseña	: 7
+luicasad@luicasad42:~$
+```
+
+
 
 ---
 ## Sgoinfre usage conditions
