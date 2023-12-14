@@ -1,4 +1,7 @@
 # Born2beRoot
+
+[What i learnt from my evaluators](#what-i-learnt)
+
 ## Prepare space for your virtual machine
 Remember that the disk space we have in our 42 sessions is limited to 5 GB. It is enough for the mandatory part of this project. You can stop here and do nothing about it or, in case you plan to do the bonus part, you can use a permanent 30 GB disk quota you are entitled to in /sgoinfre/Perso. (see below conditions to use it without sad surprises)
 
